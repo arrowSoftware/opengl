@@ -1,6 +1,10 @@
 # Required libraries: glut, glew, GL, glm, glfw3
 # libglm-dev, libglfw3-dev libglew-dev
 
+OLD_SHELL := $(SHELL)
+
+SHELL = $(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(OLD_SHELL) -x
+
 OSFLAG :=
 ifeq ($(OS),Windows_NT)
 	OSFLAG += -D WIN32
@@ -35,9 +39,9 @@ endif
 
 CXX      := g++
 CXXFLAGS := -Wall -std=c++11
-BUILD    := ./Build
-OBJ_DIR  := $(BUILD)/Objects
-APP_DIR  := $(BUILD)/Apps
+BLD_DIR  := ./Build
+OBJ_DIR  := $(BLD_DIR)/Objects/$(BUILD)
+APP_DIR  := $(BLD_DIR)/Apps/$(BUILD)
 INC_DIR  := ./Include
 TARGET   := opengl
 
@@ -51,6 +55,20 @@ OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 all: build $(APP_DIR)/$(TARGET)
 
+#.PHONY: all build clean debug release
+
+debug: CXXFLAGS += -DDEBUG
+debug: all
+
+release: CXXFLAGS += -O2
+release: all
+
+build:
+	@mkdir -p $(APP_DIR)
+	@cp ./Source/Shaders/* $(APP_DIR)
+	@mkdir -p $(OBJ_DIR)
+	@find . -name "*.h" | xargs
+
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
@@ -58,25 +76,11 @@ $(OBJ_DIR)/%.o: %.cpp
 $(APP_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $(APP_DIR)/$(TARGET) $(OBJECTS) $(LDFLAGS)
-	#ln -s $(APP_DIR)/$(TARGET) ./$(TARGET) 
-
-.PHONY: all build clean debug release
-
-build:
-	@mkdir -p $(APP_DIR)
-	@cp ./Source/Shaders/* $(APP_DIR)
-	@mkdir -p $(OBJ_DIR)
-	@find . -name "*.h" | xargs 
-
-debug: CXXFLAGS += -DDEBUG -g
-debug: all
-
-release: CXXFLAGS += -O2
-release: all
+	@cp -v ./Source/Shaders/* $(APP_DIR)/.
+	#ln -s $(APP_DIR)/$(TARGET) ./$(TARGET)
 
 clean:
 	@rm -rvf $(OBJ_DIR)/*
 	@rm -rvf $(APP_DIR)/*
 	@rm -fv ./$(TARGET)
 	@rm -fv $(INC_DIR)/*
-	
