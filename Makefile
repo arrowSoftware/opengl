@@ -1,11 +1,15 @@
+# Required libraries: glut, glew, GL, glm, glfw3
+# libglm-dev, libglfw3-dev libglew-dev
+
 CXX      := g++
 CXXFLAGS := -Wall
-LDFLAGS  := -lglut -lGLU -lGL
+LDFLAGS  := -lglut -lGLU -lGL -lGLEW -lglfw
 BUILD    := ./Build
 OBJ_DIR  := $(BUILD)/Objects
 APP_DIR  := $(BUILD)/Apps
 INC_DIR  := ./Include
-TARGET   := marchingCube
+TARGET   := opengl
+
 INCLUDE  := -IInclude/ \
             -I./Source/Core/
 
@@ -29,6 +33,7 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 
 build:
 	@mkdir -p $(APP_DIR)
+	@cp ./Source/Shaders/* $(APP_DIR)
 	@mkdir -p $(OBJ_DIR)
 	@find . -name "*.h" | xargs 
 
@@ -39,7 +44,8 @@ release: CXXFLAGS += -O2
 release: all
 
 clean:
-	-@rm -rvf $(OBJ_DIR)/*
-	-@rm -rvf $(APP_DIR)/*
-	-@rm -fv ./$(TARGET)
+	@rm -rvf $(OBJ_DIR)/*
+	@rm -rvf $(APP_DIR)/*
+	@rm -fv ./$(TARGET)
+	@rm -fv $(INC_DIR)/*
 	
