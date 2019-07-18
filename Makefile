@@ -1,9 +1,40 @@
 # Required libraries: glut, glew, GL, glm, glfw3
 # libglm-dev, libglfw3-dev libglew-dev
 
+OSFLAG :=
+ifeq ($(OS),Windows_NT)
+	OSFLAG += -D WIN32
+	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+		OSFLAG += -D AMD64
+	endif
+	ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+		OSFLAG += -D IA32
+	endif
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		OSFLAG  += -D LINUX
+		LDFLAGS := -lglut -lGLU -lGL -lGLEW -lglfw
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		OSFLAG  += -D OSX
+		LDFLAGS := /System/Library/Frameworks/GLUT.framework/GLUT /System/Library/Frameworks/OpenGL.framework/OpenGL -lGLEW -lglfw
+	endif
+
+	UNAME_P := $(shell uname -p)
+	ifeq ($(UNAME_P),x86_64)
+		OSFLAG += -D AMD64
+	endif
+		ifneq ($(filter %86,$(UNAME_P)),)
+	OSFLAG += -D IA32
+		endif
+	ifneq ($(filter arm%,$(UNAME_P)),)
+		OSFLAG += -D ARM
+	endif
+endif
+
 CXX      := g++
-CXXFLAGS := -Wall
-LDFLAGS  := -lglut -lGLU -lGL -lGLEW -lglfw
+CXXFLAGS := -Wall -std=c++11
 BUILD    := ./Build
 OBJ_DIR  := $(BUILD)/Objects
 APP_DIR  := $(BUILD)/Apps

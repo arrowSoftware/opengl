@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #define OBJECT(name) \
 private: \
@@ -38,7 +38,7 @@ class Object
 
 	private:
 		std::string _objectName;
-		const std::string _className = "Object";
+		std::string _className;
 
 		glm::vec3 _position;
 		glm::vec3 _rotation;

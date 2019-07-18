@@ -4,6 +4,7 @@
 
 Object::Object(std::string argObjectName) :
 	_objectName(argObjectName),
+        _className("Object"),
 	_position(glm::vec3(0, 0, 0)),
 	_rotation(glm::vec3(0, 0, 0)),
 	_scale(glm::vec3(1, 1, 1))
