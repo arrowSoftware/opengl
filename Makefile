@@ -1,9 +1,8 @@
 # Required libraries: glut, glew, GL, glm, glfw3
 # libglm-dev, libglfw3-dev libglew-dev
 
-OLD_SHELL := $(SHELL)
-
-SHELL = $(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(OLD_SHELL) -x
+#OLD_SHELL := $(SHELL)
+#SHELL = $(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(OLD_SHELL) -x
 
 OSFLAG :=
 ifeq ($(OS),Windows_NT)
@@ -46,9 +45,25 @@ INC_DIR  := ./Include
 TARGET   := opengl
 
 INCLUDE  := -IInclude/ \
-            -I./Source/Core/
+            -I./Source/ \
+			-I./Source/Core/ \
+			-I./Source/Core/Object/ \
+			-I./Source/Core/Input/ \
+			-I./Source/Core/Application/ \
+			-I./Source/Core/Event/ \
+			-I./Source/Core/Commands/ \
+			-I./Source/Core/Shaders/ \
+			-I./Source/Core/utils/ \
+			-I./Source/Core/Camera/
 
 SRC      := $(wildcard Source/Core/*.cpp) \
+			$(wildcard Source/Core/Object/*.cpp) \
+			$(wildcard Source/Core/Camera/*.cpp) \
+			$(wildcard Source/Core/Input/*.cpp) \
+			$(wildcard Source/Core/Application/*.cpp) \
+			$(wildcard Source/Core/Event/*.cpp) \
+			$(wildcard Source/Core/Commands/*.cpp) \
+			$(wildcard Source/Core/Shaders/*.cpp) \
             $(wildcard Source/*.cpp)
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
@@ -76,7 +91,7 @@ $(OBJ_DIR)/%.o: %.cpp
 $(APP_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $(APP_DIR)/$(TARGET) $(OBJECTS) $(LDFLAGS)
-	@cp -v ./Source/Shaders/* $(APP_DIR)/.
+	@cp -v ./Source/Core/Shaders/* $(APP_DIR)/.
 	#ln -s $(APP_DIR)/$(TARGET) ./$(TARGET)
 
 clean:

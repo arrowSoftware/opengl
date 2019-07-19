@@ -8,6 +8,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
 #include <GLUT/glut.h>
+#include <GLFW/glfw3.h>
+
+#include "ShaderProgram.h"
 
 #define OBJECT(name) \
 private: \
@@ -20,7 +23,7 @@ class Object
 	public:
 		Object(std::string argObjectName);
 		virtual ~Object(void);
-		
+
 		std::string ObjectName(void);
 		virtual std::string ClassName(void);
 
@@ -35,12 +38,19 @@ class Object
 		void Rotate(glm::vec3 argRotation);
 
 		virtual void Draw(void) = 0;
+        virtual void Initialize(void) = 0;
+        virtual void Wrapup(void) = 0;
+        void UseShader(ShaderProgram &shader);
 
-	private:
+	protected:
 		std::string _objectName;
 		std::string _className;
 
 		glm::vec3 _position;
 		glm::vec3 _rotation;
 		glm::vec3 _scale;
+
+        ShaderProgram _shaderProgram;
+        GLuint mUniformVP;
+        GLuint mUniformModel;
 };
