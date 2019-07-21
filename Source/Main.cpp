@@ -3,11 +3,6 @@
 #include "CameraController.h"
 #include "utils.h"
 
-describe(something, {
-	int a, b;
-    printf("[%s]\n", __PRETTY_FUNCTION__);
-});
-
 int main(int argc, char** argv)
 {
     test_something();

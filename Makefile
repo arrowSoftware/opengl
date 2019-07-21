@@ -53,7 +53,7 @@ INCLUDE  := -IInclude/ \
 			-I./Source/Core/Event/ \
 			-I./Source/Core/Commands/ \
 			-I./Source/Core/Shaders/ \
-			-I./Source/Core/utils/ \
+			-I./Source/Core/Utils/ \
 			-I./Source/Core/Camera/
 
 SRC      := $(wildcard Source/Core/*.cpp) \
