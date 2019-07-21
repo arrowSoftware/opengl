@@ -16,7 +16,7 @@
 private: \
 	std::string _className = #name; \
 public: \
-	std::string ClassName(void) {return this->_className;}
+	std::string GetClassName(void) {return this->_className;}
 
 class Object
 {
@@ -24,12 +24,12 @@ class Object
 		Object(std::string argObjectName);
 		virtual ~Object(void);
 
-		std::string ObjectName(void);
-		virtual std::string ClassName(void);
+		std::string GetObjectName(void);
+		virtual std::string GetClassName(void);
 
-		glm::vec3 Position(void);
-		glm::vec3 Rotation(void);
-		glm::vec3 Scale(void);
+		glm::vec3 GetPosition(void);
+		glm::vec3 GetRotation(void);
+		glm::vec3 GetScale(void);
 
 		glm::vec3 SetPosition(glm::vec3 argPosition);
 		glm::vec3 SetRotation(glm::vec3 argRotation);
@@ -51,6 +51,6 @@ class Object
 		glm::vec3 _scale;
 
         ShaderProgram _shaderProgram;
-        GLuint mUniformVP;
-        GLuint mUniformModel;
+        GLuint _uniformVP;
+        GLuint _uniformModel;
 };

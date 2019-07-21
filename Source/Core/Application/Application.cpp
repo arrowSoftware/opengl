@@ -1,23 +1,27 @@
+// Project Includes.
 #include "Application.h"
 #include "ApplicationException.h"
 #include "utils.h"
-#include <chrono>
-#include <iostream>
-#include <thread>
 
-InputManager Application::mInputManager;
-CameraController Application::mCameraController;
+// STL Includes.
+#include <iostream>
+#include <algorithm>
+
+// Declare the static members of Application.
+InputManager Application::_inputManager;
+CameraController Application::_cameraController;
 
 static void ErrorCallback(int error, const char *msg)
 {
-    DEBUG_PRINTF("Entry")
     std::cerr << "GLFW Error " << error << ": " << msg << std::endl;
 }
 
 Application::Application(std::string argName) :
+    _window(nullptr),
     _name(argName)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} <- ({})", __PRETTY_FUNCTION__, argName);
+
     // Initialise GLFW
     if (!glfwInit())
     {
@@ -48,100 +52,140 @@ Application::Application(std::string argName) :
     {
         throw ApplicationException("Failed to initialize GLEW");
 	}
+
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
 }
 
 Application::~Application(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+
     // Destruct the window
     glfwDestroyWindow(_window);
 
     // Terminate GLFW
     glfwTerminate();
+
+    // Clean up members.
+    _window = nullptr;
+    _name = "";
+    _objects.clear();
+
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
 }
 
 void Application::Run(void)
 {
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+
     // Enable depth test
     glEnable(GL_DEPTH_TEST);
 
     // Accept fragment if it closer to the camera than the former one
     glDepthFunc(GL_LESS);
 
+    // Set the baclgroud color to blue.
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
+    // Enable sticky keys for the window.
     glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
 
+    // Initialize all objects.
     this->Initialize();
 
+    // Enter main loop.
+    spdlog::trace("{} Entering main loop", __PRETTY_FUNCTION__);
+
+    // Stay in the loop until the escape key is hit or the window is supposed to
+    // close.
     do
     {
+        // Draw all attached objects.
         this->Draw();
+
+        // Poll for mouse/keyboard events.
         glfwPollEvents();
-    } while (glfwGetKey(_window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(_window) == 0);
+    } while (glfwGetKey(this->_window, GLFW_KEY_ESCAPE) !=
+             GLFW_PRESS && glfwWindowShouldClose(this->_window) == 0);
 
+    spdlog::trace("{} Exiting main loop", __PRETTY_FUNCTION__);
+
+    // Wrapup all attached objects.
     this->Wrapup();
 
-    /*
-    DEBUG_PRINTF("Entry")
-    double curTime, updateTime;
-    const double delta = 1.0/60.0;
-    unsigned int skipFrames = 0;
-
-    // Configure OpenGL
-    glEnable(GL_DEPTH_TEST);
-
-    this->Initialize();
-
-    // The main loop
-    std::cout << "Beginning Main Loop ..." << std::endl;
-    updateTime = glfwGetTime();
-    while (!glfwWindowShouldClose(_window))
-    {
-        curTime = glfwGetTime();
-        if (curTime >= updateTime)
-        {
-            updateTime += delta;
-            if ((curTime < updateTime) || (skipFrames > 10))
-            {
-                this->Draw();
-                skipFrames = 0;
-            }
-            else
-            {
-                skipFrames++;
-            }
-        }
-        else
-        {
-            // Try to sleep for the remainder of the frame in order to reduce
-            // CPU usage.
-            int ms = (updateTime - curTime) * 1000;
-            if (ms > 0)
-            {
-                std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-            }
-        }
-    }
-    std::cout << "Exiting Main Loop ..." << std::endl;
-    this->Wrapup();
-    */
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
 }
 
-GLFWwindow *Application::Window(void)
+void Application::Attach(Object *argObject)
 {
-    DEBUG_PRINTF("Entry")
-    return this->_window;
-}
+    spdlog::trace("{} <- ({})", __PRETTY_FUNCTION__, argObject->GetObjectName());
 
-void Application::AddObject(Object *argObject)
-{
-    DEBUG_PRINTF("Entry")
+    // Add object to the draw list.
     this->_objects.push_back(argObject);
+
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
 }
 
-void Application::printVersionInfo(void)
+void Application::Dettach(Object *argObject)
 {
+    spdlog::trace("{} <- ({})", __PRETTY_FUNCTION__, argObject->GetObjectName());
+
+    std::vector<Object *>::iterator it = std::find(
+        this->_objects.begin(),
+        this->_objects.end(),
+        argObject);
+
+    if (this->_objects.end() != it)
+    {
+        this->_objects.erase(it);
+        spdlog::debug("{} Erased: {}", __PRETTY_FUNCTION__, argObject->GetObjectName());
+    }
+
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
+
+}
+
+void Application::RegisterInputs(InputManager &argManager)
+{
+    spdlog::trace("{} -> ({})", __PRETTY_FUNCTION__, (void*)&argManager);
+
+    Application::_inputManager = argManager;
+
+    glfwSetKeyCallback(this->_window, Application::KeyCallback);
+    glfwSetInputMode(this->_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(this->_window, Application::MouseCallback);
+
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+}
+
+void Application::RegisterCameraController(CameraController &argCameraController)
+{
+    spdlog::trace("{} -> ({})",
+                  __PRETTY_FUNCTION__,
+                  (void*)&argCameraController);
+
+    Application::_cameraController = argCameraController;
+
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+}
+
+void Application::RegisterInputToCamera(InputManager &argManager,
+                                        CameraController &argCameraController)
+{
+    spdlog::trace("{} -> ({},{})",
+                  __PRETTY_FUNCTION__,
+                  (void*)&argManager,
+                  (void*)&argCameraController);
+
+    argCameraController.registerWith(argManager);
+
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+}
+
+void Application::PrintVersionInfo(void)
+{
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+
     int major, minor, revision;
 
     glfwGetVersion(&major, &minor, &revision);
@@ -152,77 +196,110 @@ void Application::printVersionInfo(void)
 
     std::cout << "GLM Version " << GLM_VERSION_MAJOR << "." << GLM_VERSION_MINOR
         << "." << GLM_VERSION_PATCH << "." << GLM_VERSION_REVISION << std::endl;
+
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
 }
 
-void Application::RegisterInputs(InputManager &manager)
+GLFWwindow *Application::GetWindow(void)
 {
-    DEBUG_PRINTF("Entry")
-    mInputManager = manager;
-
-    glfwSetKeyCallback(this->_window, KeyCallback);
-    glfwSetInputMode(this->_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetCursorPosCallback(this->_window, MouseCallback);
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} -> ({})", __PRETTY_FUNCTION__, (void*)this->_window);
+    return this->_window;
 }
 
-void Application::RegisterCameraController(CameraController &cameraController)
+CameraController Application::GetCameraController(void)
 {
-    DEBUG_PRINTF("Entry")
-    mCameraController = cameraController;
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} -> ({})",
+                  __PRETTY_FUNCTION__,
+                  (void*)&Application::_cameraController);
+    return Application::_cameraController;
 }
 
-void Application::RegisterInputToCamera(InputManager &manager, CameraController &cameraController)
+std::string Application::GetName(void)
 {
-    DEBUG_PRINTF("Entry")
-    cameraController.registerWith(manager);
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} -> ({})", __PRETTY_FUNCTION__, this->_name);
+    return this->_name;
+}
+
+InputManager Application::GetInputManager(void)
+{
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} -> ({})",
+                  __PRETTY_FUNCTION__,
+                  (void*)&Application::_inputManager);
+    return Application::_inputManager;
 }
 
 void Application::Draw(void)
 {
-    DEBUG_PRINTF("Entry")
-    GLint width, height;
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
 
+    // Get the window buffer size.
+    GLint width, height;
     glfwGetFramebufferSize(this->_window, &width, &height);
+
+    // Set the view port.
     glViewport(0, 0, width, height);
+
+    // Set the background.
     glClearColor(0.0, 0.0, 4.0, 1.0);
+
+    // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Perform RenderInterface Rendering
+    // Draw each attached object.
     for (Object *object : this->_objects)
     {
         object->Draw();
     }
 
+    // swap front and back buffers.
     glfwSwapBuffers(this->_window);
-}
-
-void Application::Initialize(void)
-{
-    DEBUG_PRINTF("Entry")
-    for (Object *object : this->_objects)
-    {
-        object->Initialize();
-    }
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
 }
 
 void Application::Wrapup(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
+
+    // wrapup and delete all attached objects.
     for (Object *object : this->_objects)
     {
         object->Wrapup();
         delete object;
     }
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
+}
+
+void Application::Initialize(void)
+{
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
+
+    // Initialize all attached objects.
+    for (Object *object : this->_objects)
+    {
+        object->Initialize();
+    }
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
 }
 
 void Application::KeyCallback(GLFWwindow *window, int key, int scancode,
     int action, int modifiers)
 {
-    DEBUG_PRINTF("Entry")
-    mInputManager.KeyCallback(window, key, scancode, action, modifiers);
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
+
+    // Call the inputs managers keyboard callback.
+    Application::_inputManager.KeyCallback(window, key, scancode, action, modifiers);
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
 }
 
 void Application::MouseCallback(GLFWwindow *window, double xpos, double ypos)
 {
-    DEBUG_PRINTF("Entry")
-    mInputManager.MouseCallback(window, xpos, ypos);
+    spdlog::trace("{} -> ()", __PRETTY_FUNCTION__);
+
+    // call the input managers mouse callback.
+    Application::_inputManager.MouseCallback(window, xpos, ypos);
+    spdlog::trace("{} <- ()", __PRETTY_FUNCTION__);
 }

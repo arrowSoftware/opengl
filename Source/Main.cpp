@@ -3,9 +3,17 @@
 #include "CameraController.h"
 #include "utils.h"
 
+describe(something, {
+	int a, b;
+    printf("[%s]\n", __PRETTY_FUNCTION__);
+});
+
 int main(int argc, char** argv)
 {
-    DEBUG_PRINTF("Entry")
+    test_something();
+
+    spdlog::set_level(spdlog::level::trace);
+
     // Create the main application window.
 	Application application("opengl");
 
@@ -37,9 +45,9 @@ int main(int argc, char** argv)
     cube->UseShader(shader);
 
     // Attach an object to be drawn to the application.
-    application.AddObject(cube);
+    application.Attach(cube);
 
-    application.printVersionInfo();
+    application.PrintVersionInfo();
 
     // Enter the main application loop.
     application.Run();

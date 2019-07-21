@@ -18,31 +18,31 @@ Object::~Object()
     DEBUG_PRINTF("Entry")
 }
 
-std::string Object::ObjectName(void)
+std::string Object::GetObjectName(void)
 {
     DEBUG_PRINTF("Entry")
 	return this->_objectName;
 }
 
-std::string Object::ClassName(void)
+std::string Object::GetClassName(void)
 {
     DEBUG_PRINTF("Entry")
 	return this->_className;
 }
 
-glm::vec3 Object::Position(void)
+glm::vec3 Object::GetPosition(void)
 {
     DEBUG_PRINTF("Entry")
 	return this->_position;
 }
 
-glm::vec3 Object::Rotation(void)
+glm::vec3 Object::GetRotation(void)
 {
     DEBUG_PRINTF("Entry")
 	return this->_rotation;
 }
 
-glm::vec3 Object::Scale(void)
+glm::vec3 Object::GetScale(void)
 {
     DEBUG_PRINTF("Entry")
 	return this->_scale;
