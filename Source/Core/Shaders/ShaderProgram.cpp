@@ -13,7 +13,7 @@
 
 #include "ShaderProgram.h"
 #include "ApplicationException.h"
-#include "utils.h"
+#include "Utils.h"
 
 ShaderProgram::ShaderProgram(std::string vertex, std::string fragment)
 {

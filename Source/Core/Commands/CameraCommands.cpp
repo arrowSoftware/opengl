@@ -3,7 +3,7 @@
 /// of these commands are generated and responded to by the InputManager.
 ////////////////////////////////////////////////////////////////////////////////
 #include "CameraCommands.h"
-#include "utils.h"
+#include "Utils.h"
 
 LookCommand::LookCommand(Camera *camera, float yaw, float pitch)
 {
@@ -16,8 +16,8 @@ LookCommand::LookCommand(Camera *camera, float yaw, float pitch)
 void LookCommand::Execute(void)
 {
     DEBUG_PRINTF("Entry")
-    mCamera->setYaw(mYaw);
-    mCamera->setPitch(mPitch);
+    mCamera->SetYaw(mYaw);
+    mCamera->SetPitch(mPitch);
 }
 
 MoveCommand::MoveCommand(Camera *camera, glm::vec3 position)
@@ -30,5 +30,5 @@ MoveCommand::MoveCommand(Camera *camera, glm::vec3 position)
 void MoveCommand::Execute(void)
 {
     DEBUG_PRINTF("Entry")
-    mCamera->setPosition(mPosition);
+    mCamera->SetPosition(mPosition);
 }

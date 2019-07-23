@@ -7,8 +7,8 @@
 class ApplicationException : public std::runtime_error
 {
     public:
-        ApplicationException(std::string const &error) :
-            std::runtime_error(error)
+        ApplicationException(std::string const &argError) :
+            std::runtime_error(argError)
         {};
 };
 

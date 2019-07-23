@@ -2,7 +2,7 @@
 /// This class represents a generic command.
 ////////////////////////////////////////////////////////////////////////////////
 #include "Command.h"
-#include "utils.h"
+#include "Utils.h"
 
 Command::~Command(void)
 {

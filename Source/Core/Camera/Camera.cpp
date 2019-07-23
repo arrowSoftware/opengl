@@ -1,71 +1,126 @@
+// STL Includes.
 #include <iostream>
+
+// OpenGL Includes.
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+// Project Includes.
 #include "Camera.h"
-#include "utils.h"
+#include "Utils.h"
 
-Camera::Camera(void)
+Camera::Camera(void) :
+    _position(glm::vec3(0.0, 0.0, -10.0)),
+    _facing(glm::vec3(0.0, 0.0, 0.0)),
+    _yaw(90.0f),
+    _pitch(0.0f)
 {
-    DEBUG_PRINTF("Entry")
-    mPosition = glm::vec3(0.0, 0.0, -10.0);
-    mYaw = 90.0;
-    mPitch = 0.0;
-    updateFacing();
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+
+    UpdateFacing();
+
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Camera::setPosition(glm::vec3 aPosition)
-{ DEBUG_PRINTF("Entry")mPosition = aPosition; }
-
-glm::vec3 Camera::getPosition(void)
-{ DEBUG_PRINTF("Entry")return mPosition; }
-
-glm::vec3 Camera::getFacing(void)
-{ DEBUG_PRINTF("Entry")return mFacing; }
-
-void Camera::setYaw(float aYaw)
+void Camera::SetPosition(glm::vec3 argPosition)
 {
-    DEBUG_PRINTF("Entry")
-    mYaw = aYaw;
-    updateFacing();
+    spdlog::trace("{} IN ({},{},{})",
+                  __PRETTY_FUNCTION__,
+                  argPosition.x,
+                  argPosition.y,
+                  argPosition.z);
+
+    this->_position = argPosition;
+
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-float Camera::getYaw(void)
-{ DEBUG_PRINTF("Entry")return mYaw; }
-
-void Camera::setPitch(float aPitch)
+glm::vec3 Camera::GetPosition(void)
 {
-    DEBUG_PRINTF("Entry")
-    mPitch = aPitch;
-    updateFacing();
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} OUT ({},{},{})",
+                  __PRETTY_FUNCTION__,
+                  glm::to_string(this->_position));
+    return this->_position;
 }
 
-float Camera::getPitch(void)
-{ DEBUG_PRINTF("Entry")return mPitch; }
-
-glm::mat4 Camera::getView(void)
+glm::vec3 Camera::GetFacing(void)
 {
-    DEBUG_PRINTF("Entry")
-    return glm::lookAt(
-        mPosition,
-        mPosition + mFacing,
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} OUT ({})",
+                  __PRETTY_FUNCTION__,
+                  glm::to_string(this->_facing));
+    return this->_facing;
+}
+
+void Camera::SetYaw(float argYaw)
+{
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argYaw);
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
+
+    this->_yaw = argYaw;
+    this->UpdateFacing();
+}
+
+float Camera::GetYaw(void)
+{
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, this->_yaw);
+
+    return this->_yaw;
+}
+
+void Camera::SetPitch(float argPitch)
+{
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argPitch);
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
+
+    this->_pitch = argPitch;
+    this->UpdateFacing();
+}
+
+float Camera::GetPitch(void)
+{
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, this->_pitch);
+
+    return this->_pitch;
+}
+
+glm::mat4 Camera::GetView(void)
+{
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+
+    glm::mat4 ret = glm::lookAt(
+        this->_position,
+        this->_position + this->_facing,
         glm::vec3(0.0, 1.0, 0.0));
+
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, glm::to_string(ret));
+    return ret;
 }
 
-void Camera::updateFacing(void)
+void Camera::UpdateFacing(void)
 {
-    DEBUG_PRINTF("Entry")
-    mFacing.x = glm::cos(glm::radians(mYaw)) * glm::cos(glm::radians(mPitch));
-    mFacing.y = glm::sin(glm::radians(mPitch));
-    mFacing.z = glm::sin(glm::radians(mYaw)) * glm::cos(glm::radians(mPitch));
-    if (mFacing.x != 0 && mFacing.y != 0 && mFacing.z != 0)
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+
+    this->_facing.x = glm::cos(glm::radians(this->_yaw)) *
+                      glm::cos(glm::radians(this->_pitch));
+    this->_facing.y = glm::sin(glm::radians(this->_pitch));
+    this->_facing.z = glm::sin(glm::radians(this->_yaw)) *
+                      glm::cos(glm::radians(this->_pitch));
+    if (this->_facing.x != 0 && this->_facing.y != 0 && this->_facing.z != 0)
     {
-        mFacing = glm::normalize(mFacing);
+        this->_facing = glm::normalize(this->_facing);
     }
+    spdlog::trace("{} OUT ({})",
+                  __PRETTY_FUNCTION__,
+                  glm::to_string(this->_facing));
 }
 
-void Camera::printData(void)
+void Camera::PrintData(void)
 {
-    DEBUG_PRINTF("Entry")
-    std::cout << "Pos: (" << mPosition.x << ", " << mPosition.y << ", " <<
-        mPosition.z << ") Dir: (" << mFacing.x << ", " << mFacing.y << ", " <<
-        mFacing.z << ") Yaw: " << mYaw << " Pitch: " << mPitch << std::endl;
+    std::cout << "Pos: (" << this->_position.x << ", " << this->_position.y << ", " <<
+        this->_position.z << ") Dir: (" << this->_facing.x << ", " << this->_facing.y << ", " <<
+        this->_facing.z << ") Yaw: " << this->_yaw << " Pitch: " << this->_pitch << std::endl;
 }

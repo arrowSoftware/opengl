@@ -1,5 +1,5 @@
 #include "Cube.h"
-#include "utils.h"
+#include "Utils.h"
 #include "Application.h"
 
 #include <glm/gtc/matrix_transform.hpp>

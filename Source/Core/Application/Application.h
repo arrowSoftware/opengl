@@ -1,3 +1,6 @@
+#ifndef _APPLICATION_H_
+#define _APPLICATION_H_
+
 // STL Includes.
 #include <string>
 #include <vector>
@@ -267,3 +270,5 @@ class Application
                                   double argYpos);
 
 };
+
+#endif // _APPLICATION_H_

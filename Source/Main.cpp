@@ -1,12 +1,10 @@
 #include "Cube.h"
 #include "Application.h"
 #include "CameraController.h"
-#include "utils.h"
+#include "Utils.h"
 
 int main(int argc, char** argv)
 {
-    test_something();
-
     spdlog::set_level(spdlog::level::trace);
 
     // Create the main application window.
@@ -46,7 +44,6 @@ int main(int argc, char** argv)
 
     // Enter the main application loop.
     application.Run();
-
 
     return 0;
 }

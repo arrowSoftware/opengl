@@ -4,7 +4,7 @@
 /// is one source of generating events.
 ////////////////////////////////////////////////////////////////////////////////
 #include "EventObserver.h"
-#include "utils.h"
+#include "Utils.h"
 
 EventObserver::~EventObserver(void)
 {

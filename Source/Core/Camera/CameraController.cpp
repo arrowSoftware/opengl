@@ -4,7 +4,7 @@
 #include "InputManager.h"
 
 #include "CameraController.h"
-#include "utils.h"
+#include "Utils.h"
 
 static const glm::vec3 VECTOR_UP = glm::vec3(0.0, 1.0, 0.0);
 static const float MOVEMENT_SPEED = 0.5;
@@ -57,20 +57,20 @@ void CameraController::update(void)
 glm::mat4 CameraController::getView(void)
 {
     DEBUG_PRINTF("Entry")
-    return mCamera.getView();
+    return _camera.GetView();
 }
 
 glm::vec3 CameraController::getPosition(void)
 {
     DEBUG_PRINTF("Entry")
-    return mCamera.getPosition();
+    return _camera.GetPosition();
 }
 
 void CameraController::updatePosition(void)
 {
     DEBUG_PRINTF("Entry")
-    glm::vec3 position = mCamera.getPosition();
-    glm::vec3 direction = mCamera.getFacing();
+    glm::vec3 position = _camera.GetPosition();
+    glm::vec3 direction = _camera.GetFacing();
     glm::vec3 deltaPos = glm::vec3(0);
 
     Command *cmd;
@@ -115,7 +115,7 @@ void CameraController::updatePosition(void)
     }
 
     // Create the command.
-    cmd = new MoveCommand(&mCamera, position + deltaPos);
+    cmd = new MoveCommand(&_camera, position + deltaPos);
     cmd->Execute();
     delete cmd;
 }
@@ -123,8 +123,8 @@ void CameraController::updatePosition(void)
 void CameraController::updateFacing(void)
 {
     DEBUG_PRINTF("Entry")
-    float yaw = mCamera.getYaw();
-    float pitch = mCamera.getPitch();
+    float yaw = _camera.GetYaw();
+    float pitch = _camera.GetPitch();
 
     Command *cmd;
 
@@ -149,7 +149,7 @@ void CameraController::updateFacing(void)
         pitch += dy * LOOK_SPEED;
 
         // Create the command.
-        cmd = new LookCommand(&mCamera, yaw, pitch);
+        cmd = new LookCommand(&_camera, yaw, pitch);
         cmd->Execute();
         delete cmd;
     }

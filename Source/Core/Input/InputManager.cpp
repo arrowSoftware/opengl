@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "InputManager.h"
-#include "utils.h"
+#include "Utils.h"
 
 InputManager::InputManager(void)
 {
