@@ -27,21 +27,71 @@ class InputManager
 {
     public:
         /// Constructs an input manager instance.
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         InputManager(void);
 
         /// This function is used to register event callbacks with the InputManager.
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         void RegisterInput(ApplicationEventEnum code, EventObserver *observer);
 
         /// This function processes GLFW Key Events and converts them to application
         /// events.
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         void KeyCallback(GLFWwindow *window, int key, int scancode,
             int action, int modifiers);
 
         /// This function processes GLFW Mouse Events and converts them to
         /// application events.
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         void MouseCallback(GLFWwindow *window, double xpos, double ypos);
 
         /// This function sends an event to all registered EventObservers.
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         void EmitEvent(ApplicationEventStruct event);
 
     private:

@@ -5,34 +5,87 @@
 #ifndef _COMMANDS_H_
 #define _COMMANDS_H_
 
+// OpenGL Includes.
 #include <glm/glm.hpp>
 
+// Project Includes.
 #include "Camera.h"
 #include "Command.h"
 
-// A command to cause the camera to look at a specific point.
 class LookCommand : public Command
 {
     public:
-        LookCommand(Camera *camera, float yaw, float pitch);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //  LookCommand.
+        // Description:
+        //  A command to cause the camera to look at a spcific point.
+        // Parameters:
+        //  argCamera: The camera instance.
+        //  argYaw: Yaw of the camera.
+        //  argPitch: Pitch of the camera.
+        // Returns:
+        //  LookCommand object.
+        ////////////////////////////////////////////////////////////////////////
+        LookCommand(Camera *argCamera, float argYaw, float argPitch);
+
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //  Execute.
+        // Description:
+        //  Executes the command.
+        // Parameters:
+        //  None.
+        // Returns:
+        //  None.
+        ////////////////////////////////////////////////////////////////////////
         virtual void Execute(void);
 
     private:
-        Camera *mCamera;
-        float mYaw;
-        float mPitch;
+        // The camera object.
+        Camera *_camera;
+
+        // Yaw to set.
+        float _yaw;
+
+        // pitch to set.
+        float _pitch;
 };
 
-/// @brief A command to cause the camera to move to a specific location.
 class MoveCommand : public Command
 {
     public:
-        MoveCommand(Camera *camera, glm::vec3 position);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //  MoveCommand.
+        // Description:
+        //  A command to cause the camera to move to a spcific location.
+        // Parameters:
+        //  argCamera: The camera to move.
+        //  argPosition: The position to move to.
+        // Returns:
+        //  MoveCommand object.
+        ////////////////////////////////////////////////////////////////////////
+        MoveCommand(Camera *argCamera, glm::vec3 argPosition);
+
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //  Execute.
+        // Description:
+        //  Executes the command.
+        // Parameters:
+        //  None.
+        // Returns:
+        //  None.
+        ////////////////////////////////////////////////////////////////////////
         virtual void Execute(void);
 
     private:
-        Camera *mCamera;
-        glm::vec3 mPosition;
+        // The camera object.
+        Camera *_camera;
+
+        // Position to move to.
+        glm::vec3 _position;
 };
 
 #endif // _COMMANDS_H_

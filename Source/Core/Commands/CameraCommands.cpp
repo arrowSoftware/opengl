@@ -1,34 +1,50 @@
-////////////////////////////////////////////////////////////////////////////////
-/// This file contains several command classes that the Camera responds to. Most
-/// of these commands are generated and responded to by the InputManager.
-////////////////////////////////////////////////////////////////////////////////
+// Project Includes.
 #include "CameraCommands.h"
 #include "Utils.h"
 
-LookCommand::LookCommand(Camera *camera, float yaw, float pitch)
+LookCommand::LookCommand(Camera *argCamera, float argYaw, float argPitch)
 {
-    DEBUG_PRINTF("Entry")
-    mCamera = camera;
-    mYaw = yaw;
-    mPitch = pitch;
+    spdlog::trace("{} IN ({},{},{})",
+                  __PRETTY_FUNCTION__,
+                  (void*)argCamera,
+                  argYaw,
+                  argPitch);
+
+    _camera = argCamera;
+    _yaw = argYaw;
+    _pitch = argPitch;
+
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }
 
 void LookCommand::Execute(void)
 {
-    DEBUG_PRINTF("Entry")
-    mCamera->SetYaw(mYaw);
-    mCamera->SetPitch(mPitch);
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__);
+
+    this->_camera->SetYaw(this->_yaw);
+    this->_camera->SetPitch(this->_pitch);
+
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }
 
-MoveCommand::MoveCommand(Camera *camera, glm::vec3 position)
+MoveCommand::MoveCommand(Camera *argCamera, glm::vec3 argPosition)
 {
-    DEBUG_PRINTF("Entry")
-    mCamera = camera;
-    mPosition = position;
+    spdlog::trace("{} IN ({},{})",
+                  __PRETTY_FUNCTION__,
+                  (void*)argCamera,
+                  glm::to_string(argPosition));
+
+    _camera = argCamera;
+    _position = argPosition;
+
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }
 
 void MoveCommand::Execute(void)
 {
-    DEBUG_PRINTF("Entry")
-    mCamera->SetPosition(mPosition);
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__);
+
+    this->_camera->SetPosition(this->_position);
+
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }

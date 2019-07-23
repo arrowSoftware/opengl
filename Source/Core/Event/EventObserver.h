@@ -6,17 +6,36 @@
 #ifndef _EVENT_OBSERVER_H_
 #define _EVENT_OBSERVER_H_
 
+// Project Includes.
 #include "Event.h"
 
-/// @class EventObserver
-/// @brief A class to observe events.
-///
 /// This is the base class for listening to events. All subclasses must
 /// implement the onEvent method to receive an event.
 class EventObserver
 {
     public:
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         virtual ~EventObserver(void);
+
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //
+        // Description:
+        //
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
         virtual void OnEvent(ApplicationEventStruct event) = 0;
 };
 
