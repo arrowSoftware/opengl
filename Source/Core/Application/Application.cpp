@@ -1,6 +1,6 @@
 // Project Includes.
 #include "Application.h"
-#include "ApplicationException.h"
+#include "ApplicationException.hpp"
 #include "Utils.h"
 
 // STL Includes.
@@ -90,7 +90,7 @@ void Application::Run(void)
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
     // Enable sticky keys for the window.
-    glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetInputMode(this->_window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // Initialize all objects.
     this->Initialize();
@@ -146,7 +146,6 @@ void Application::Dettach(Object *argObject)
     }
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
-
 }
 
 void Application::RegisterInputs(InputManager &argManager)
@@ -273,6 +272,7 @@ void Application::Wrapup(void)
     {
         object->Wrapup();
         delete object;
+        object = NULL;
     }
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
