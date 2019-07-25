@@ -1,0 +1,8 @@
+{
+  "execPath": "/usr/local/Cellar/gcc/8.2.0/bin/gcc-8",
+  "gccDefaultCFlags": "-Wall",
+  "gccDefaultCppFlags": "-Wall -std=c++11",
+  "gccErrorLimit": 15,
+  "gccIncludePaths": "./,-/,./*,./Source/Core/Inpput,./Soure/Core/Application,./Source/Core/Camera,./Source/Core/Utils",
+  "gccSuppressWarnings": false
+}

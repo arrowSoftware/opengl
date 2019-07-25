@@ -24,7 +24,7 @@ class Camera
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  SetPosition.
+        //  setPosition.
         // Description
         //  Set the position of the camera.
         // Parameters:
@@ -32,11 +32,11 @@ class Camera
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void SetPosition(glm::vec3 argPosition);
+        void setPosition(glm::vec3 argPosition);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetPosition.
+        //  position.
         // Description
         //  Get the position of the camera.
         // Parameters:
@@ -44,11 +44,11 @@ class Camera
         // Returns:
         //  vec3 of the camera position.
         ////////////////////////////////////////////////////////////////////////
-        glm::vec3 GetPosition(void);
+        glm::vec3 position(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetFacing.
+        //  facing.
         // Description
         //  This function gets the direction the camera is facing. Anytime the
         //  yaw or pitch is changed, the direction the camera is facing will be
@@ -58,11 +58,11 @@ class Camera
         // Returns:
         //  vec3 of the camera facing position.
         ////////////////////////////////////////////////////////////////////////
-        glm::vec3 GetFacing(void);
+        glm::vec3 facing(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  SetYaw.
+        //  setYaw.
         // Description
         //  Set the yaw of the camera.
         // Parameters:
@@ -70,11 +70,11 @@ class Camera
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void SetYaw(float argYaw);
+        void setYaw(float argYaw);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetYaw.
+        //  yaw.
         // Description
         //  Get the yaw of the camera.
         // Parameters:
@@ -82,11 +82,11 @@ class Camera
         // Returns:
         //  Camera yaw.
         ////////////////////////////////////////////////////////////////////////
-        float GetYaw(void);
+        float yaw(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  SetPitch.
+        //  setPitch.
         // Description
         //  Set the pitch of the camera.
         // Parameters:
@@ -94,11 +94,11 @@ class Camera
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void SetPitch(float argPitch);
+        void setPitch(float argPitch);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetPitch.
+        //  pitch.
         // Description
         //  Get the pitch of the camera.
         // Parameters:
@@ -106,13 +106,11 @@ class Camera
         // Returns:
         //  Pitch of the camera.
         ////////////////////////////////////////////////////////////////////////
-        float GetPitch(void);
+        float pitch(void);
 
-        /// This function returns the view matrix represented by the camera's
-        /// position, direction, and up vector.
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetView.
+        //  view.
         // Description
         //  This function returns the view matrix represented by the cameras
         //  position, direction and up vector.
@@ -121,7 +119,7 @@ class Camera
         // Returns:
         //  View matrix.
         ////////////////////////////////////////////////////////////////////////
-        glm::mat4 GetView(void);
+        glm::mat4 view(void);
 
     private:
         // The position of the camera in the world.
@@ -138,7 +136,7 @@ class Camera
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  UpdateFacing.
+        //  updateFacing.
         // Description
         //  Update where the camera is facing.
         // Parameters:
@@ -146,11 +144,11 @@ class Camera
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void UpdateFacing(void);
+        void updateFacing(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  PrintData.
+        //  printData.
         // Description
         //  Print out the camera, position, direction, yaw and pitch
         // Parameters:
@@ -158,7 +156,7 @@ class Camera
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void PrintData(void);
+        void printData(void);
 };
 
 #endif

@@ -11,7 +11,7 @@
 InputManager Application::_inputManager;
 CameraController Application::_cameraController;
 
-static void ErrorCallback(int error, const char *msg)
+static void errorCallback(int error, const char *msg)
 {
     std::cerr << "GLFW Error " << error << ": " << msg << std::endl;
 }
@@ -29,7 +29,7 @@ Application::Application(std::string argName) :
     }
 
     // Set the error callback
-    glfwSetErrorCallback(ErrorCallback);
+    glfwSetErrorCallback(errorCallback);
 
     glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -76,7 +76,7 @@ Application::~Application(void)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::Run(void)
+void Application::run(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
@@ -93,7 +93,7 @@ void Application::Run(void)
     glfwSetInputMode(this->_window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // Initialize all objects.
-    this->Initialize();
+    this->initialize();
 
     // Enter main loop.
     spdlog::trace("{} Entering main loop", __PRETTY_FUNCTION__);
@@ -103,7 +103,7 @@ void Application::Run(void)
     do
     {
         // Draw all attached objects.
-        this->Draw();
+        this->draw();
 
         // Poll for mouse/keyboard events.
         glfwPollEvents();
@@ -113,12 +113,12 @@ void Application::Run(void)
     spdlog::trace("{} Exiting main loop", __PRETTY_FUNCTION__);
 
     // Wrapup all attached objects.
-    this->Wrapup();
+    this->wrapup();
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::Attach(Object *argObject)
+void Application::attach(Object *argObject)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->GetObjectName());
 
@@ -128,9 +128,9 @@ void Application::Attach(Object *argObject)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::Dettach(Object *argObject)
+void Application::dettach(Object *argObject)
 {
-    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->GetObjectName());
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->getObjectName());
 
     std::vector<Object *>::iterator it = std::find(
         this->_objects.begin(),
@@ -142,37 +142,37 @@ void Application::Dettach(Object *argObject)
         this->_objects.erase(it);
         spdlog::debug("{} Erased: {}",
                       __PRETTY_FUNCTION__,
-                      argObject->GetObjectName());
+                      argObject->getObjectName());
     }
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::RegisterInputs(InputManager &argManager)
+void Application::registerInputs(InputManager &argManager)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, (void*)&argManager);
 
-    Application::_inputManager = argManager;
+    _inputManager = argManager;
 
-    glfwSetKeyCallback(this->_window, Application::KeyCallback);
+    glfwSetKeyCallback(this->_window, Application::keyCallback);
     glfwSetInputMode(this->_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetCursorPosCallback(this->_window, Application::MouseCallback);
+    glfwSetCursorPosCallback(this->_window, Application::mouseCallback);
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::RegisterCameraController(CameraController &argCameraController)
+void Application::registerCameraController(CameraController &argCameraController)
 {
     spdlog::trace("{} IN ({})",
                   __PRETTY_FUNCTION__,
                   (void*)&argCameraController);
 
-    Application::_cameraController = argCameraController;
+    _cameraController = argCameraController;
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::RegisterInputToCamera(InputManager &argManager,
+void Application::registerInputToCamera(InputManager &argManager,
                                         CameraController &argCameraController)
 {
     spdlog::trace("{} IN ({},{})",
@@ -185,7 +185,7 @@ void Application::RegisterInputToCamera(InputManager &argManager,
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::PrintVersionInfo(void)
+void Application::printVersionInfo(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
@@ -203,39 +203,39 @@ void Application::PrintVersionInfo(void)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-GLFWwindow *Application::GetWindow(void)
+GLFWwindow *Application::window(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, (void*)this->_window);
     return this->_window;
 }
 
-CameraController Application::GetCameraController(void)
+CameraController Application::cameraController(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})",
                   __PRETTY_FUNCTION__,
-                  (void*)&Application::_cameraController);
-    return Application::_cameraController;
+                  (void*)&_cameraController);
+    return _cameraController;
 }
 
-std::string Application::GetName(void)
+std::string Application::name(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, this->_name);
     return this->_name;
 }
 
-InputManager Application::GetInputManager(void)
+InputManager Application::inputManager(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})",
                   __PRETTY_FUNCTION__,
-                  (void*)&Application::_inputManager);
-    return Application::_inputManager;
+                  (void*)&_inputManager);
+    return _inputManager;
 }
 
-void Application::Draw(void)
+void Application::draw(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
@@ -255,7 +255,7 @@ void Application::Draw(void)
     // Draw each attached object.
     for (Object *object : this->_objects)
     {
-        object->Draw();
+        object->draw();
     }
 
     // swap front and back buffers.
@@ -263,33 +263,33 @@ void Application::Draw(void)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::Wrapup(void)
+void Application::wrapup(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
     // wrapup and delete all attached objects.
     for (Object *object : this->_objects)
     {
-        object->Wrapup();
+        object->wrapup();
         delete object;
         object = NULL;
     }
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::Initialize(void)
+void Application::initialize(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
     // Initialize all attached objects.
     for (Object *object : this->_objects)
     {
-        object->Initialize();
+        object->initialize();
     }
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::KeyCallback(GLFWwindow *argWindow,
+void Application::keyCallback(GLFWwindow *argWindow,
                               int argKey,
                               int argScancode,
                               int argAction,
@@ -298,7 +298,7 @@ void Application::KeyCallback(GLFWwindow *argWindow,
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
     // Call the inputs managers keyboard callback.
-    Application::_inputManager.KeyCallback(argWindow,
+    _inputManager.keyCallback(argWindow,
                                            argKey,
                                            argScancode,
                                            argAction,
@@ -306,13 +306,13 @@ void Application::KeyCallback(GLFWwindow *argWindow,
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::MouseCallback(GLFWwindow *argWindow,
+void Application::mouseCallback(GLFWwindow *argWindow,
                                 double argXpos,
                                 double argYpos)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
     // call the input managers mouse callback.
-    Application::_inputManager.MouseCallback(argWindow, argXpos, argYpos);
+    _inputManager.mouseCallback(argWindow, argXpos, argYpos);
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }

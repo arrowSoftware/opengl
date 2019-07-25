@@ -1,17 +1,22 @@
-#ifndef _APPLICATION_EXCEPTION_H_
-#define _APPLICATION_EXCEPTION_H_
+#ifndef _APPLICATION_EXCEPTION_HPP_
+#define _APPLICATION_EXCEPTION_HPP_
 
+// STL Includes.
 #include <exception>
 #include <string>
 
+// This class is derived from std::runtime_error instead of std::exception so
+// that an error msg can be passed to the constructor.
 class ApplicationException : public std::runtime_error
 {
     public:
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  ApplicationException
+        //  ApplicationException.
         // Description:
-        //  
+        //  The constructor provides a method to pass a string into the
+        //  exception so that a unique message can be displayed when an error
+        //  occurs.
         // Parameters:
         //
         // Returns:
@@ -22,4 +27,4 @@ class ApplicationException : public std::runtime_error
         {};
 };
 
-#endif // _APPLICATION_EXCEPTION_H_
+#endif // _APPLICATION_EXCEPTION_HPP_

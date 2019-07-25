@@ -16,12 +16,12 @@ Camera::Camera(void) :
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
-    UpdateFacing();
+    updateFacing();
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Camera::SetPosition(glm::vec3 argPosition)
+void Camera::setPosition(glm::vec3 argPosition)
 {
     spdlog::trace("{} IN ({},{},{})",
                   __PRETTY_FUNCTION__,
@@ -34,7 +34,7 @@ void Camera::SetPosition(glm::vec3 argPosition)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-glm::vec3 Camera::GetPosition(void)
+glm::vec3 Camera::position(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({},{},{})",
@@ -43,7 +43,7 @@ glm::vec3 Camera::GetPosition(void)
     return this->_position;
 }
 
-glm::vec3 Camera::GetFacing(void)
+glm::vec3 Camera::facing(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})",
@@ -52,16 +52,16 @@ glm::vec3 Camera::GetFacing(void)
     return this->_facing;
 }
 
-void Camera::SetYaw(float argYaw)
+void Camera::setYaw(float argYaw)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argYaw);
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 
     this->_yaw = argYaw;
-    this->UpdateFacing();
+    this->updateFacing();
 }
 
-float Camera::GetYaw(void)
+float Camera::yaw(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, this->_yaw);
@@ -69,16 +69,16 @@ float Camera::GetYaw(void)
     return this->_yaw;
 }
 
-void Camera::SetPitch(float argPitch)
+void Camera::setPitch(float argPitch)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argPitch);
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 
     this->_pitch = argPitch;
-    this->UpdateFacing();
+    this->updateFacing();
 }
 
-float Camera::GetPitch(void)
+float Camera::pitch(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, this->_pitch);
@@ -86,7 +86,7 @@ float Camera::GetPitch(void)
     return this->_pitch;
 }
 
-glm::mat4 Camera::GetView(void)
+glm::mat4 Camera::view(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
@@ -99,7 +99,7 @@ glm::mat4 Camera::GetView(void)
     return ret;
 }
 
-void Camera::UpdateFacing(void)
+void Camera::updateFacing(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
@@ -117,7 +117,7 @@ void Camera::UpdateFacing(void)
                   glm::to_string(this->_facing));
 }
 
-void Camera::PrintData(void)
+void Camera::printData(void)
 {
     std::cout << "Pos: (" << this->_position.x << ", " << this->_position.y << ", " <<
         this->_position.z << ") Dir: (" << this->_facing.x << ", " << this->_facing.y << ", " <<

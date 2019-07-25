@@ -44,7 +44,7 @@ class Application
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Run.
+        //  run.
         // Description:
         //  Executes the main application loop.
         // Parameters:
@@ -52,11 +52,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void Run(void);
+        void run(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Attach.
+        //  attach.
         // Description:
         //  Attaches an object to the Application to be drawn.
         // Parameters:
@@ -64,11 +64,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void Attach(Object *arjObj);
+        void attach(Object *arjObj);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Dettach.
+        //  dettach.
         // Description:
         //  Dettaches an object to the Application to be drawn.
         // Parameters:
@@ -76,11 +76,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void Dettach(Object *arjObj);
+        void dettach(Object *arjObj);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  RegisterInputs.
+        //  registerInputs.
         // Description:
         //  This function will register an input managers low-level functions
         //  with the applications window.
@@ -89,11 +89,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void RegisterInputs(InputManager &argManager);
+        void registerInputs(InputManager &argManager);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  RegisterCameraController.
+        //  registerCameraController.
         // Description:
         //  This function will register a camera controller with the applcation.
         // Parameters:
@@ -101,11 +101,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void RegisterCameraController(CameraController &argCameraController);
+        void registerCameraController(CameraController &argCameraController);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  RegisterInputToCamera.
+        //  registerInputToCamera.
         // Description:
         //  This function will tie a camera controller to an input manager.
         // Parameters:
@@ -114,12 +114,12 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void RegisterInputToCamera(InputManager &argManager,
+        void registerInputToCamera(InputManager &argManager,
                                    CameraController &argCameraController);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  PrintVersionInfo.
+        //  printVersionInfo.
         // Description:
         //  This will print the applcation OpenGL version info.
         // Parameters:
@@ -127,11 +127,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void PrintVersionInfo(void);
+        void printVersionInfo(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetWindow.
+        //  window.
         // Description:
         //  Getter for the window pointer.
         // Parameters:
@@ -139,11 +139,11 @@ class Application
         // Returns:
         //  Returns this objects window pointer.
         ////////////////////////////////////////////////////////////////////////
-        GLFWwindow *GetWindow(void);
+        GLFWwindow *window(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetCameraController.
+        //  cameraController.
         // Description:
         //  Getter for the camera controller.
         // Parameters:
@@ -151,11 +151,11 @@ class Application
         // Returns:
         //  Returns this objects camera controller.
         ////////////////////////////////////////////////////////////////////////
-        static CameraController GetCameraController(void);
+        static CameraController cameraController(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetName.
+        //  name.
         // Description:
         //  Getter for the applications name.
         // Parameters:
@@ -163,11 +163,11 @@ class Application
         // Returns:
         //  Returns this objects application name.
         ////////////////////////////////////////////////////////////////////////
-        std::string GetName(void);
+        std::string name(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  GetInputManager.
+        //  inputManager.
         // Description:
         //  Getter for the applications input manager.
         // Parameters:
@@ -175,7 +175,7 @@ class Application
         // Returns:
         //  Returns this objects input manager.
         ////////////////////////////////////////////////////////////////////////
-        static InputManager GetInputManager(void);
+        static InputManager inputManager(void);
 
     private:
         // This is the applications OpenGL window.
@@ -184,20 +184,20 @@ class Application
         // This is the name of the application.
         std::string _name;
 
-        /// Note that the InputManager is static in order to use it for the
-        /// callbacks that the GLFW library provides. A side effect means that there
-        /// can only be one InputManager.
+        // Note that the InputManager is static in order to use it for the
+        // callbacks that the GLFW library provides. A side effect means that
+        // there  can only be one InputManager.
         static InputManager _inputManager;
 
         // This is this objects camera controller.
         static CameraController _cameraController;
 
-        // This is a lost of objects to dawn in the main loop.
+        // This is a lost of objects to be drawn in the main loop.
         std::vector<Object *> _objects;
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Draw.
+        //  draw.
         // Description:
         //  This will draw all attached objects in the main loop.
         // Parameters:
@@ -205,11 +205,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void Draw(void);
+        void draw(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Wrapup.
+        //  wrapup.
         // Description:
         //  This will call all the attached objects wrapup functions.
         // Parameters:
@@ -217,11 +217,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void Wrapup(void);
+        void wrapup(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Initialize.
+        //  initialize.
         // Description:
         //  This will call all the attached objects initialize functions.
         // Parameters:
@@ -229,11 +229,11 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        void Initialize(void);
+        void initialize(void);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  KeyCallback.
+        //  keyCallback.
         // Description:
         //  This will be attached to OpenGLs keyboard callback and will call the
         //  InputManagers keyboard callback
@@ -246,7 +246,7 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        static void KeyCallback(GLFWwindow *argWindow,
+        static void keyCallback(GLFWwindow *argWindow,
                                 int argKey,
                                 int argScancode,
                                 int argAction,
@@ -254,7 +254,7 @@ class Application
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  MouseCallback.
+        //  mouseCallback.
         // Description:
         //  This will be attached to OpenGls mouse callback and will call the
         //  InputManagers mouse callback.
@@ -265,10 +265,9 @@ class Application
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        static void MouseCallback(GLFWwindow *arWindow,
+        static void mouseCallback(GLFWwindow *arWindow,
                                   double argXpos,
                                   double argYpos);
-
 };
 
 #endif // _APPLICATION_H_

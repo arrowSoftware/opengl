@@ -1,24 +1,37 @@
+
+// STL Includes.
 #include <iostream>
 
+// Project Includes.
 #include "CameraCommands.h"
 #include "InputManager.h"
-
 #include "CameraController.h"
 #include "Utils.h"
 
+// This represents a vector UP orientation.
 static const glm::vec3 VECTOR_UP = glm::vec3(0.0, 1.0, 0.0);
+
+// This is the "camera" movement speed.
 static const float MOVEMENT_SPEED = 0.5;
+
+// This is the cameras look speed, or mouse speed.
 static const float LOOK_SPEED = 0.25;
 
 CameraController::CameraController(void)
 {
-    DEBUG_PRINTF("Entry")
-    mEventStates.resize(AE_MAX_EVENT_ENUM);
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+
+    // set the event states to the initial max size.
+    _eventStates.resize(ApplicationEventEnum::AE_MAX_EVENT_ENUM);
+
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 void CameraController::registerWith(InputManager &manager)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+
+    // Register to be notified for the following events.
     manager.RegisterInput(AE_MOVE_FORWARD, this);
     manager.RegisterInput(AE_MOVE_BACKWARD, this);
     manager.RegisterInput(AE_MOVE_LEFT, this);
@@ -26,11 +39,12 @@ void CameraController::registerWith(InputManager &manager)
     manager.RegisterInput(AE_MOVE_UP, this);
     manager.RegisterInput(AE_MOVE_DOWN, this);
     manager.RegisterInput(AE_LOOK_AROUND, this);
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 void CameraController::OnEvent(ApplicationEventStruct event)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     if (event.type != AE_REPEAT)
     {
         mEventStates[event.code] = event.type;
@@ -45,30 +59,34 @@ void CameraController::OnEvent(ApplicationEventStruct event)
         default:
             break;
     }
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 void CameraController::update(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     updatePosition();
     updateFacing();
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 glm::mat4 CameraController::getView(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
     return _camera.GetView();
 }
 
 glm::vec3 CameraController::getPosition(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
     return _camera.GetPosition();
 }
 
 void CameraController::updatePosition(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     glm::vec3 position = _camera.GetPosition();
     glm::vec3 direction = _camera.GetFacing();
     glm::vec3 deltaPos = glm::vec3(0);
@@ -118,11 +136,13 @@ void CameraController::updatePosition(void)
     cmd = new MoveCommand(&_camera, position + deltaPos);
     cmd->Execute();
     delete cmd;
+
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 void CameraController::updateFacing(void)
 {
-    DEBUG_PRINTF("Entry")
+    spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     float yaw = _camera.GetYaw();
     float pitch = _camera.GetPitch();
 
@@ -153,4 +173,5 @@ void CameraController::updateFacing(void)
         cmd->Execute();
         delete cmd;
     }
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
