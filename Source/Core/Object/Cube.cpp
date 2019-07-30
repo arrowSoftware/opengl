@@ -25,25 +25,21 @@ constexpr GLfloat Cube::g_color_buffer_data[];
 Cube::Cube(std::string argObjectName) :
     Object(argObjectName)
 {
-    DEBUG_PRINTF("Entry")
 }
 
 Cube::~Cube(void)
 {
-    DEBUG_PRINTF("Entry")
 }
 
-void Cube::Draw(void)
+void Cube::draw(void)
 {
-    DEBUG_PRINTF("Entry")
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shaderProgram.use();
 
     // Send our transformation to the currently bound shader,
     // in the "MVP" uniform
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv((GLint)MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
     glPushMatrix();
     glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -81,14 +77,13 @@ void Cube::Draw(void)
     glPopMatrix();
 }
 
-void Cube::Initialize(void)
+void Cube::initialize(void)
 {
-    DEBUG_PRINTF("Entry")
     glGenVertexArrays(1, &VertexArrayID);
         glBindVertexArray(VertexArrayID);
 
         // Get a handle for our "MVP" uniform
-        MatrixID = glGetUniformLocation(_shaderProgram.getProgram(), "MVP");
+        MatrixID = glGetUniformLocation(_shaderProgram.program(), "MVP");
 
         // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
         Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
@@ -117,12 +112,11 @@ void Cube::Initialize(void)
         glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 }
 
-void Cube::Wrapup(void)
+void Cube::wrapup(void)
 {
-    DEBUG_PRINTF("Entry")
     // Cleanup VBO and shader
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteBuffers(1, &colorbuffer);
-    glDeleteProgram(_shaderProgram.getProgram());
+    glDeleteProgram(_shaderProgram.program());
     glDeleteVertexArrays(1, &VertexArrayID);
 }

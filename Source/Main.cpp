@@ -31,13 +31,13 @@ int main(int argc, char** argv)
     InputManager inputManager;
 
     // Attach the camera controller to the applcation.
-    application.RegisterCameraController(cameraController);
+    application.registerCameraController(cameraController);
 
     // Attach the input manager to the application.
-    application.RegisterInputs(inputManager);
+    application.registerInputs(inputManager);
 
     // Attach the input manager to the camera.
-    application.RegisterInputToCamera(inputManager, cameraController);
+    application.registerInputToCamera(inputManager, cameraController);
 
     // Create a new Cube to render.
     Cube *cube = new Cube("cube");
@@ -49,15 +49,15 @@ int main(int argc, char** argv)
     );
 
     // Attach a shader to the cube.
-    cube->UseShader(shader);
+    cube->useShader(shader);
 
     // Attach an object to be drawn to the application.
-    application.Attach(cube);
+    application.attach(cube);
 
-    application.PrintVersionInfo();
+    application.printVersionInfo();
 
     // Enter the main application loop.
-    application.Run();
+    application.run();
 
     return 0;
 }

@@ -23,75 +23,58 @@ Object::Object(std::string argObjectName) :
     _rotation(glm::vec3(0, 0, 0)),
     _scale(glm::vec3(1, 1, 1))
 {
-    DEBUG_PRINTF("Entry")
     printf("Created object: %s\n", argObjectName.c_str());
 }
 
 Object::~Object()
 {
-    DEBUG_PRINTF("Entry")
 }
 
-std::string Object::GetObjectName(void)
+std::string Object::objectName(void)
 {
-    DEBUG_PRINTF("Entry")
     return this->_objectName;
 }
 
-std::string Object::GetClassName(void)
+std::string Object::className(void)
 {
-    DEBUG_PRINTF("Entry")
     return this->_className;
 }
 
-glm::vec3 Object::GetPosition(void)
+glm::vec3 Object::position(void)
 {
-    DEBUG_PRINTF("Entry")
     return this->_position;
 }
 
-glm::vec3 Object::GetRotation(void)
+glm::vec3 Object::rotation(void)
 {
-    DEBUG_PRINTF("Entry")
     return this->_rotation;
 }
 
-glm::vec3 Object::GetScale(void)
+glm::vec3 Object::scale(void)
 {
-    DEBUG_PRINTF("Entry")
     return this->_scale;
 }
 
-glm::vec3 Object::SetPosition(glm::vec3 argPosition)
+glm::vec3 Object::setPosition(glm::vec3 argPosition)
 {
-    DEBUG_PRINTF("Entry")
     this->_position = argPosition;
     return this->_position;
 }
 
-glm::vec3 Object::SetRotation(glm::vec3 argRotation)
+glm::vec3 Object::setRotation(glm::vec3 argRotation)
 {
-    DEBUG_PRINTF("Entry")
     this->_rotation = argRotation;
     return this->_rotation;
 }
 
-glm::vec3 Object::SetScale(glm::vec3 argScale)
+glm::vec3 Object::setScale(glm::vec3 argScale)
 {
-    DEBUG_PRINTF("Entry")
     this->_scale = argScale;
     return this->_scale;
 }
 
-void Object::Rotate(glm::vec3 argRotation)
+void Object::useShader(ShaderProgram &shader)
 {
-    DEBUG_PRINTF("Entry")
-    this->SetRotation(argRotation);
-}
-
-void Object::UseShader(ShaderProgram &shader)
-{
-    DEBUG_PRINTF("Entry")
     // Ensure that the shader is ready to be used.
     if (shader.isReadyToUse() != true)
     {

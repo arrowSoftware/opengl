@@ -20,7 +20,7 @@ else
 		LDFLAGS := -lglut -lGLU -lGL -lGLEW -lglfw
 	endif
 	ifeq ($(UNAME_S),Darwin)
-		OSFLAG  += -D OSX
+		OSFLAG  += -D _OSX_
 		LDFLAGS := /System/Library/Frameworks/GLUT.framework/GLUT /System/Library/Frameworks/OpenGL.framework/OpenGL -lGLEW -lglfw
 	endif
 
@@ -37,7 +37,7 @@ else
 endif
 
 CXX      := g++
-CXXFLAGS := -Wall -std=c++11
+CXXFLAGS := -Wall -std=c++11 -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wconversion $(OSFLAG)
 BLD_DIR  := ./Build
 OBJ_DIR  := $(BLD_DIR)/Objects/$(BUILD)
 APP_DIR  := $(BLD_DIR)/Apps/$(BUILD)

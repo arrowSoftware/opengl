@@ -25,10 +25,10 @@
 static const glm::vec3 VECTOR_UP = glm::vec3(0.0, 1.0, 0.0);
 
 // This is the "camera" movement speed.
-static const float MOVEMENT_SPEED = 0.5;
+static const float MOVEMENT_SPEED = 0.5f;
 
 // This is the cameras look speed, or mouse speed.
-static const float LOOK_SPEED = 0.25;
+static const float LOOK_SPEED = 0.25f;
 
 CameraController::CameraController(void)
 {
@@ -198,8 +198,8 @@ void CameraController::updateFacing(void)
     if (dx != 0 || dy != 0)
     {
         // Calculate the new direction.
-        yaw += dx * LOOK_SPEED;
-        pitch += dy * LOOK_SPEED;
+        yaw += dx * (float)LOOK_SPEED;
+        pitch += dy * (float)LOOK_SPEED;
 
         // Create the command.
         cmd = new LookCommand(&_camera, yaw, pitch);

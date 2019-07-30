@@ -26,12 +26,11 @@
 #include <fstream>
 
 #include "ShaderProgram.h"
-#include "ApplicationException.h"
+#include "ApplicationException.hpp"
 #include "Utils.h"
 
 ShaderProgram::ShaderProgram(std::string vertex, std::string fragment)
 {
-    DEBUG_PRINTF("Entry")
     bool status = false;
 
     // Construct the Vertex Shader.
@@ -58,70 +57,67 @@ ShaderProgram::ShaderProgram(std::string vertex, std::string fragment)
 
 ShaderProgram::ShaderProgram(void)
 {
-    DEBUG_PRINTF("Entry")
     // Set the Compiled and Linked flag to false indicating that a complete
     // program was not made.
-    mCompiledAndLinked = false;
+    _compiledAndLinked = false;
 
     // Set the OpenGL variables.
-    mVertexShader = 0;
-    mFragmentShader = 0;
-    mProgram = 0;
+    _vertexShader = 0;
+    _fragmentShader = 0;
+    _program = 0;
 }
 
 ShaderProgram::~ShaderProgram(void)
 {
-    DEBUG_PRINTF("Entry")
-    glDeleteProgram(mProgram);
-    glDeleteShader(mVertexShader);
-    glDeleteShader(mFragmentShader);
+    glDeleteProgram(_program);
+    glDeleteShader(_vertexShader);
+    glDeleteShader(_fragmentShader);
 }
 
 bool ShaderProgram::isReadyToUse(void)
 {
     // The program is ready to use if it has shaders that have been compiled and
     // linked.
-    return mCompiledAndLinked;
+    return _compiledAndLinked;
 }
 
 bool ShaderProgram::useVertexShader(std::string vertex)
 {
-    DEBUG_PRINTF("Entry")
     GLint glResult = GL_FALSE;
 
     // By setting a new vertex shader, the program must be relinked in order to
     // use it.
-    mCompiledAndLinked = false;
+    _compiledAndLinked = false;
 
     // If a previous vertex shader exists, then mark it for deletion. OpenGL
     // will not delete the shader until it is no longer in context (i.e. if it
     // is part of the active shader program, it won't get deleted until a new
     // program is used).
-    if (mVertexShader != 0)
+    if (_vertexShader != 0)
     {
-        glDeleteShader(mVertexShader);
+        glDeleteShader(_vertexShader);
     }
 
     // Save the filename and source of the file.
-    mVertexFile = vertex;
-    mVertexSource = readFile(mVertexFile);
+    _vertexFile = vertex;
+    _vertexSource = readFile(_vertexFile);
 
     // Construct the new vertex shader.
-    mVertexShader = glCreateShader(GL_VERTEX_SHADER);
-    if (mVertexShader == 0)
+    _vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    if (_vertexShader == 0)
     {
         return false;
     }
 
-    const GLchar *sourceCString = mVertexSource.c_str();
-    glShaderSource(mVertexShader, 1, &sourceCString, NULL);
-    glCompileShader(mVertexShader);
-    glGetShaderiv(mVertexShader, GL_COMPILE_STATUS, &glResult);
+    const GLchar *sourceCString = _vertexSource.c_str();
+    glShaderSource(_vertexShader, 1, &sourceCString, NULL);
+    glCompileShader(_vertexShader);
+    glGetShaderiv(_vertexShader, GL_COMPILE_STATUS, &glResult);
     if (GL_FALSE == glResult)
     {
-        printInfoLog(mVertexShader);
-        glDeleteShader(mVertexShader);
-        mVertexShader = 0;
+        printInfoLog(_vertexShader);
+        glDeleteShader(_vertexShader);
+        _vertexShader = 0;
         return false;
     }
 
@@ -130,42 +126,41 @@ bool ShaderProgram::useVertexShader(std::string vertex)
 
 bool ShaderProgram::useFragmentShader(std::string fragment)
 {
-    DEBUG_PRINTF("Entry")
     GLint glResult = GL_FALSE;
 
     // By setting a new fragment shader, the program must be relinked in order
     // to use it.
-    mCompiledAndLinked = false;
+    _compiledAndLinked = false;
 
     // If a previous fragment shader exists, then mark it for deletion. OpenGL
     // will not delete the shader until it is no longer in context (i.e. if it
     // is part of the active shader program, it won't get deleted until a new
     // program is used).
-    if (mFragmentShader != 0)
+    if (_fragmentShader != 0)
     {
-        glDeleteShader(mFragmentShader);
+        glDeleteShader(_fragmentShader);
     }
 
     // Save the filename and source of the file.
-    mFragmentFile = fragment;
-    mFragmentSource = readFile(mFragmentFile);
+    _fragmentFile = fragment;
+    _fragmentSource = readFile(_fragmentFile);
 
     // Construct the new fragment shader.
-    mFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    if (mFragmentShader == 0)
+    _fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    if (_fragmentShader == 0)
     {
         return false;
     }
 
-    const GLchar *sourceCString = mFragmentSource.c_str();
-    glShaderSource(mFragmentShader, 1, &sourceCString, NULL);
-    glCompileShader(mFragmentShader);
-    glGetShaderiv(mFragmentShader, GL_COMPILE_STATUS, &glResult);
+    const GLchar *sourceCString = _fragmentSource.c_str();
+    glShaderSource(_fragmentShader, 1, &sourceCString, NULL);
+    glCompileShader(_fragmentShader);
+    glGetShaderiv(_fragmentShader, GL_COMPILE_STATUS, &glResult);
     if (GL_FALSE == glResult)
     {
-        printInfoLog(mFragmentShader);
-        glDeleteShader(mFragmentShader);
-        mFragmentShader = 0;
+        printInfoLog(_fragmentShader);
+        glDeleteShader(_fragmentShader);
+        _fragmentShader = 0;
         return false;
     }
 
@@ -174,19 +169,18 @@ bool ShaderProgram::useFragmentShader(std::string fragment)
 
 bool ShaderProgram::linkProgram(void)
 {
-    DEBUG_PRINTF("Entry")
     GLint glResult = GL_FALSE;
 
     // If the program is already compiled and linked (signaling that no new
     // shader has been added), then simply return true.
-    if (mCompiledAndLinked == true)
+    if (_compiledAndLinked == true)
     {
         return true;
     }
 
     // If either the vertex or the fragment shader is missing, then do not link
     // the program.
-    if (mVertexShader == 0 || mFragmentShader == 0)
+    if (_vertexShader == 0 || _fragmentShader == 0)
     {
         return false;
     }
@@ -194,38 +188,37 @@ bool ShaderProgram::linkProgram(void)
     // Otherwise, we need to relink the program. If a previous program exists,
     // then we mark it for deletion. OpenGL won't delete the program if it is
     // active untile another program is being used.
-    if (mProgram != 0)
+    if (_program != 0)
     {
-        glDeleteProgram(mProgram);
+        glDeleteProgram(_program);
     }
 
     // Construct the new program.
-    mProgram = glCreateProgram();
-    if (mProgram == 0)
+    _program = glCreateProgram();
+    if (_program == 0)
     {
         return false;
     }
 
-    glAttachShader(mProgram, mVertexShader);
-    glAttachShader(mProgram, mFragmentShader);
-    glLinkProgram(mProgram);
-    glGetProgramiv(mProgram, GL_LINK_STATUS, &glResult);
+    glAttachShader(_program, _vertexShader);
+    glAttachShader(_program, _fragmentShader);
+    glLinkProgram(_program);
+    glGetProgramiv(_program, GL_LINK_STATUS, &glResult);
     if (GL_FALSE == glResult)
     {
-        printInfoLog(mProgram);
-        glDeleteProgram(mProgram);
-        mProgram = 0;
+        printInfoLog(_program);
+        glDeleteProgram(_program);
+        _program = 0;
         return false;
     }
 
     // Since the program linked successfully, it is ready to be used.
-    mCompiledAndLinked = true;
+    _compiledAndLinked = true;
     return true;
 }
 
 void ShaderProgram::use(void)
 {
-    DEBUG_PRINTF("Entry")
     // Do not activate unless the program is ready.
     if (isReadyToUse() != true)
     {
@@ -234,19 +227,17 @@ void ShaderProgram::use(void)
         return;
     }
 
-    glUseProgram(mProgram);
+    glUseProgram(_program);
 }
 
-GLint ShaderProgram::getProgram(void)
+GLuint ShaderProgram::program(void)
 {
-    DEBUG_PRINTF("Entry")
-    return mProgram;
+    return _program;
 }
 
-GLuint ShaderProgram::getUniformLocation(std::string uniform)
+GLuint ShaderProgram::uniformLocation(std::string uniform)
 {
-    DEBUG_PRINTF("Entry")
-    GLuint loc = glGetUniformLocation(mProgram, uniform.c_str());
+    GLuint loc = glGetUniformLocation(_program, uniform.c_str());
     if (loc == GL_INVALID_INDEX)
     {
         std::cerr << "ShaderProgram: unable to find uniform " << uniform <<
@@ -257,37 +248,35 @@ GLuint ShaderProgram::getUniformLocation(std::string uniform)
 
 ShaderProgram& ShaderProgram::operator=(const ShaderProgram& other)
 {
-    DEBUG_PRINTF("Entry")
-    if (mVertexShader != 0)
+    if (_vertexShader != 0)
     {
-        glDeleteShader(mVertexShader);
+        glDeleteShader(_vertexShader);
     }
 
-    if (mFragmentShader != 0)
+    if (_fragmentShader != 0)
     {
-        glDeleteShader(mFragmentShader);
+        glDeleteShader(_fragmentShader);
     }
 
-    if (mProgram != 0)
+    if (_program != 0)
     {
-        glDeleteProgram(mProgram);
+        glDeleteProgram(_program);
     }
 
-    mCompiledAndLinked = other.mCompiledAndLinked;
-    mVertexFile = other.mVertexFile;
-    mVertexSource = other.mVertexSource;
-    mVertexShader = other.mVertexShader;
-    mFragmentFile = other.mFragmentFile;
-    mFragmentSource = other.mFragmentSource;
-    mFragmentShader = other.mFragmentShader;
-    mProgram = other.mProgram;
+    _compiledAndLinked = other._compiledAndLinked;
+    _vertexFile = other._vertexFile;
+    _vertexSource = other._vertexSource;
+    _vertexShader = other._vertexShader;
+    _fragmentFile = other._fragmentFile;
+    _fragmentSource = other._fragmentSource;
+    _fragmentShader = other._fragmentShader;
+    _program = other._program;
 
     return *this;
 }
 
 std::string ShaderProgram::readFile(std::string filename)
 {
-    DEBUG_PRINTF("Entry")
     std::ifstream input(filename);
     std::stringstream contents;
 
@@ -314,10 +303,9 @@ std::string ShaderProgram::readFile(std::string filename)
     return "";
 }
 
-void ShaderProgram::printInfoLog(GLint object)
+void ShaderProgram::printInfoLog(GLuint object)
 {
-    DEBUG_PRINTF("Entry")
-    GLint logLength = 0;
+    GLuint logLength = 0;
 
     if (glIsShader(object))
     {

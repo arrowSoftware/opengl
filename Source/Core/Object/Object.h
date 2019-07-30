@@ -139,7 +139,7 @@ class Object
         // Returns:
         //    glm::vec3 New position of the object.
         ////////////////////////////////////////////////////////////////////////
-        glm::vec3 SetPosition(glm::vec3 argPosition);
+        glm::vec3 setPosition(glm::vec3 argPosition);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
@@ -151,7 +151,7 @@ class Object
         // Returns:
         //    glm::vec3 New rotation of the object.
         ////////////////////////////////////////////////////////////////////////
-        glm::vec3 SetRotation(glm::vec3 argRotation);
+        glm::vec3 setRotation(glm::vec3 argRotation);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
@@ -163,7 +163,7 @@ class Object
         // Returns:
         //    glm::vec3 New scale of the object.
         ////////////////////////////////////////////////////////////////////////
-        glm::vec3 SetScale(glm::vec3 argScale);
+        glm::vec3 setScale(glm::vec3 argScale);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:

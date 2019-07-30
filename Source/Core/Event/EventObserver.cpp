@@ -22,5 +22,4 @@
 
 EventObserver::~EventObserver(void)
 {
-DEBUG_PRINTF("Entry")
 }

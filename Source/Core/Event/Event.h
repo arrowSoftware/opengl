@@ -50,9 +50,9 @@ typedef enum ApplicationEventType
 // This is the data for a xyz coords.
 typedef struct ApplicationEventAxisStruct
 {
-    double x;
-    double y;
-    double z;
+    float x;
+    float y;
+    float z;
 } app_event_axis_t;
 
 // This is the data associated with an event.
@@ -73,9 +73,9 @@ typedef struct ApplicationEventStruct
         printf("code: %d\n", this->code);
         printf("type: %d\n", this->type);
         printf("data.axis:\n");
-        printf("\tx: %d\n", this->data.axis.x);
-        printf("\ty: %d\n", this->data.axis.y);
-        printf("\tz: %d\n", this->data.axis.z);
+        printf("\tx: %f\n", this->data.axis.x);
+        printf("\ty: %f\n", this->data.axis.y);
+        printf("\tz: %f\n", this->data.axis.z);
     }
 } app_event_struct_t;
 

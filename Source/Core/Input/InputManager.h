@@ -103,8 +103,8 @@ class InputManager
         //    None.
         ////////////////////////////////////////////////////////////////////////
         void mouseCallback(GLFWwindow *argWindow,
-                           double argXpos, 
-                           double argYpos);
+                           float argXpos, 
+                           float argYpos);
  
         ////////////////////////////////////////////////////////////////////////
         // Function:

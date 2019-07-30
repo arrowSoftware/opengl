@@ -73,7 +73,7 @@ class ShaderProgram
         // Function:
         //    isReadyToUse
         // Description:
-        //  A Program is ready to be used if it has been compiled and linked, 
+        //  A Program is ready to be used if it has been compiled and linked,
         //  which is the status of the mCompiledAndLinked member variable.
         // Parameters:
         //    None.
@@ -87,10 +87,10 @@ class ShaderProgram
         // Function:
         //    useVertexShader
         // Description:
-        //    This function will read the source of the file 'vertex' and compile 
-        //  it. Only one vertex shader can be associated with the shader 
-        //    program. If a previous vertex shader has been created, then it will 
-        //  be overwritten by the new one. Creating a new shader requires the 
+        //    This function will read the source of the file 'vertex' and compile
+        //  it. Only one vertex shader can be associated with the shader
+        //    program. If a previous vertex shader has been created, then it will
+        //  be overwritten by the new one. Creating a new shader requires the
         //  program to be relinked.
         // Parameters:
         //    argVertex: Vertex shader path.
@@ -104,10 +104,10 @@ class ShaderProgram
         // Function:
         //    useFragmentShader
         // Description:
-        //    This function will read the source of the file 'fragment' and 
-        //  compile it. Only one fragment shader can be associated with the 
-        //  shader program. If a previous fragment shader has been created, then 
-        //  it will be overwritten by the new one. Creating a new shader 
+        //    This function will read the source of the file 'fragment' and
+        //  compile it. Only one fragment shader can be associated with the
+        //  shader program. If a previous fragment shader has been created, then
+        //  it will be overwritten by the new one. Creating a new shader
         //  requires the program to be relinked.
         // Parameters:
         //    argFragment: Fragment shader path.
@@ -150,9 +150,9 @@ class ShaderProgram
         // Parameters:
         //    None.
         // Returns:
-        //    GLinit shader program.
+        //    GLuint shader program.
         ////////////////////////////////////////////////////////////////////////
-        GLint program(void);
+        GLuint program(void);
 
         /// The function retrieves a uniform location in the program.
         ////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ class ShaderProgram
         std::string _vertexSource;
 
         // The OpenGL Compiled Vertex Shader.
-        GLint _vertexShader;
+        GLuint _vertexShader;
 
         // The file used to compile the Fragment Shader.
         std::string _fragmentFile;
@@ -199,16 +199,16 @@ class ShaderProgram
         std::string _fragmentSource;
 
         // The OpenGL Compiled Fragment Shader.
-        GLint _fragmentShader;
+        GLuint _fragmentShader;
 
         // The OpenGL Linked Shader Program.
-        GLint _program;
+        GLuint _program;
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
         //    readFile
         // Description:
-        //    This function reads the contents of the file passed in as an 
+        //    This function reads the contents of the file passed in as an
         //    argument and returns the contents of that file as a string.
         // Parameters:
         //    argFilename: File to read.
@@ -228,7 +228,7 @@ class ShaderProgram
         // Returns:
         //    None.
         ////////////////////////////////////////////////////////////////////////
-        void printInfoLog(GLint argObject);
+        void printInfoLog(GLuint argObject);
 };
 
 #endif // _SHADER_PROGRAM_H_

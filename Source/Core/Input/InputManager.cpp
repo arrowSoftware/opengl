@@ -22,37 +22,34 @@
 
 InputManager::InputManager(void)
 {
-    DEBUG_PRINTF("Entry")
     // Resize the subscribers list to the maximum ApplicationEvent.
-    mSubscribers.resize(AE_MAX_EVENT_ENUM);
+    _subscribers.resize(AE_MAX_EVENT_ENUM);
 
     // Resize the keymap to the maximum GLFW Key Input.
-    mKeyEventMap.resize(GLFW_KEY_LAST);
+    _keyEventMap.resize(GLFW_KEY_LAST);
 
     // Set some default keys (TODO: Remove).
-    mKeyEventMap[GLFW_KEY_W] = AE_MOVE_FORWARD;
-    mKeyEventMap[GLFW_KEY_S] = AE_MOVE_BACKWARD;
-    mKeyEventMap[GLFW_KEY_A] = AE_MOVE_LEFT;
-    mKeyEventMap[GLFW_KEY_D] = AE_MOVE_RIGHT;
-    mKeyEventMap[GLFW_KEY_SPACE] = AE_MOVE_UP;
-    mKeyEventMap[GLFW_KEY_LEFT_SHIFT] = AE_MOVE_DOWN;
+    _keyEventMap[GLFW_KEY_W] = AE_MOVE_FORWARD;
+    _keyEventMap[GLFW_KEY_S] = AE_MOVE_BACKWARD;
+    _keyEventMap[GLFW_KEY_A] = AE_MOVE_LEFT;
+    _keyEventMap[GLFW_KEY_D] = AE_MOVE_RIGHT;
+    _keyEventMap[GLFW_KEY_SPACE] = AE_MOVE_UP;
+    _keyEventMap[GLFW_KEY_LEFT_SHIFT] = AE_MOVE_DOWN;
 }
 
-void InputManager::RegisterInput(
+void InputManager::registerInput(
     ApplicationEventEnum code, EventObserver *observer)
 {
-    DEBUG_PRINTF("Entry")
-    mSubscribers[code].push_back(observer);
+    _subscribers[code].push_back(observer);
 }
 
-void InputManager::KeyCallback(GLFWwindow *window, int key, int scancode,
+void InputManager::keyCallback(GLFWwindow *window, int key, int scancode,
     int action, int modifiers)
 {
-    DEBUG_PRINTF("Entry")
     ApplicationEventStruct event;
 
     // The code is stored in the keymap.
-    event.code = mKeyEventMap[key];
+    event.code = _keyEventMap[(unsigned long)key];
 
     // The type depends upon the action.
     switch (action)
@@ -68,12 +65,11 @@ void InputManager::KeyCallback(GLFWwindow *window, int key, int scancode,
             break;
     }
 
-    EmitEvent(event);
+    emitEvent(event);
 }
 
-void InputManager::MouseCallback(GLFWwindow *window, double xpos, double ypos)
+void InputManager::mouseCallback(GLFWwindow *window, float xpos, float ypos)
 {
-    DEBUG_PRINTF("Entry")
     ApplicationEventStruct event;
 
     event.code = AE_LOOK_AROUND;
@@ -82,14 +78,13 @@ void InputManager::MouseCallback(GLFWwindow *window, double xpos, double ypos)
     event.data.axis.x = xpos;
     event.data.axis.y = ypos;
 
-    EmitEvent(event);
+    emitEvent(event);
 }
 
-void InputManager::EmitEvent(ApplicationEventStruct event)
+void InputManager::emitEvent(ApplicationEventStruct event)
 {
-    DEBUG_PRINTF("Entry")
-    for (EventObserver *observer : mSubscribers[event.code])
+    for (EventObserver *observer : _subscribers[event.code])
     {
-        observer->OnEvent(event);
+        observer->onEvent(event);
     }
 }

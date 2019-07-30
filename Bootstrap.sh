@@ -18,4 +18,4 @@ do
 done
 
 export BUILD=$build
-make $build
+make $build -j14
