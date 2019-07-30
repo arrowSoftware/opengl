@@ -84,7 +84,7 @@ class Cube : public Object
         GLuint vertexbuffer;
         GLuint colorbuffer;
         GLuint programID;
-        GLuint MatrixID;
+        GLint MatrixID;
         GLuint VertexArrayID;
         glm::mat4 Projection;
         glm::mat4 View;

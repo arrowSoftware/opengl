@@ -237,13 +237,13 @@ GLuint ShaderProgram::program(void)
 
 GLuint ShaderProgram::uniformLocation(std::string uniform)
 {
-    GLuint loc = glGetUniformLocation(_program, uniform.c_str());
+    GLint loc = glGetUniformLocation(_program, uniform.c_str());
     if (loc == GL_INVALID_INDEX)
     {
         std::cerr << "ShaderProgram: unable to find uniform " << uniform <<
             std::endl;
     }
-    return loc;
+    return (GLuint)loc;
 }
 
 ShaderProgram& ShaderProgram::operator=(const ShaderProgram& other)
@@ -305,7 +305,7 @@ std::string ShaderProgram::readFile(std::string filename)
 
 void ShaderProgram::printInfoLog(GLuint object)
 {
-    GLuint logLength = 0;
+    GLint logLength = 0;
 
     if (glIsShader(object))
     {

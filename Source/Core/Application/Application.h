@@ -283,8 +283,8 @@ class Application
         //  None.
         ////////////////////////////////////////////////////////////////////////
         static void mouseCallback(GLFWwindow *arWindow,
-                                  float argXpos,
-                                  float argYpos);
+                                  double argXpos,
+                                  double argYpos);
 };
 
 #endif // _APPLICATION_H_

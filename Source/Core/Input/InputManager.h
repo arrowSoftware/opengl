@@ -19,8 +19,8 @@
 /// It also manages the mapping of keys to game controls. It functions by
 /// emitting an event when a key is pressed and when a key is released. These
 /// are the eventStart and eventEnd events. Other logic may be used to release
-/// a series of events. It handles the GLFW input methods and converts the data 
-/// into an application event. It also is the subject of the observer pattern. 
+/// a series of events. It handles the GLFW input methods and converts the data
+/// into an application event. It also is the subject of the observer pattern.
 /// it will notify all registered observers when an event occurs.
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -57,7 +57,7 @@ class InputManager
         // Function:
         //    registerInput.
         // Description:
-        //    This function is used to register event callbacks with the 
+        //    This function is used to register event callbacks with the
         //  InputManager.
         // Parameters:
         //    argCode: Which event to register.
@@ -65,14 +65,14 @@ class InputManager
         // Returns:
         //    None.
         ////////////////////////////////////////////////////////////////////////
-        void registerInput(ApplicationEventEnum argCode, 
+        void registerInput(ApplicationEventEnum argCode,
                            EventObserver *argObserver);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
         //    keyCallback.
         // Description:
-        //  This function processes GLFW Key Events and converts them to 
+        //  This function processes GLFW Key Events and converts them to
         //  application events.
         // Parameters:
         //    argWindow: glfw window to process keybord input.
@@ -83,10 +83,10 @@ class InputManager
         // Returns:
         //    None
         ////////////////////////////////////////////////////////////////////////
-        void keyCallback(GLFWwindow *argWindow, 
-                         int argKey, 
+        void keyCallback(GLFWwindow *argWindow,
+                         int argKey,
                          int argScancode,
-                         int argAction, 
+                         int argAction,
                          int argModifiers);
 
         ////////////////////////////////////////////////////////////////////////
@@ -103,9 +103,9 @@ class InputManager
         //    None.
         ////////////////////////////////////////////////////////////////////////
         void mouseCallback(GLFWwindow *argWindow,
-                           float argXpos, 
-                           float argYpos);
- 
+                           double argXpos,
+                           double argYpos);
+
         ////////////////////////////////////////////////////////////////////////
         // Function:
         //    emitEvent
@@ -122,7 +122,7 @@ class InputManager
 
         // Each index in the vector corresponds to a single ApplicationEventEnum.
         // The vector stores a list of observers that will be notified when the
-        // corresponding event occurs. It is sixed in the contrustor to the 
+        // corresponding event occurs. It is sixed in the contrustor to the
         // largest value in the ApplicationEventEnum.
         std::vector<std::list<EventObserver *>> _subscribers;
 

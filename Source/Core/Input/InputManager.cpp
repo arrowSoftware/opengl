@@ -68,15 +68,15 @@ void InputManager::keyCallback(GLFWwindow *window, int key, int scancode,
     emitEvent(event);
 }
 
-void InputManager::mouseCallback(GLFWwindow *window, float xpos, float ypos)
+void InputManager::mouseCallback(GLFWwindow *window, double xpos, double ypos)
 {
     ApplicationEventStruct event;
 
     event.code = AE_LOOK_AROUND;
     event.type = AE_SINGLE;
 
-    event.data.axis.x = xpos;
-    event.data.axis.y = ypos;
+    event.data.axis.x = (float)xpos;
+    event.data.axis.y = (float)ypos;
 
     emitEvent(event);
 }

@@ -321,8 +321,8 @@ void Application::keyCallback(GLFWwindow *argWindow,
 }
 
 void Application::mouseCallback(GLFWwindow *argWindow,
-                                float argXpos,
-                                float argYpos)
+                                double argXpos,
+                                double argYpos)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
