@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
 // Project Includes.
 #include "CameraCommands.h"
 #include "Utils.h"
@@ -17,12 +30,12 @@ LookCommand::LookCommand(Camera *argCamera, float argYaw, float argPitch)
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }
 
-void LookCommand::Execute(void)
+void LookCommand::execute(void)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__);
 
-    this->_camera->SetYaw(this->_yaw);
-    this->_camera->SetPitch(this->_pitch);
+    this->_camera->setYaw(this->_yaw);
+    this->_camera->setPitch(this->_pitch);
 
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }
@@ -40,11 +53,11 @@ MoveCommand::MoveCommand(Camera *argCamera, glm::vec3 argPosition)
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }
 
-void MoveCommand::Execute(void)
+void MoveCommand::execute(void)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__);
 
-    this->_camera->SetPosition(this->_position);
+    this->_camera->setPosition(this->_position);
 
     spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__);
 }

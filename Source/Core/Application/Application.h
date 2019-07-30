@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
 #ifndef _APPLICATION_H_
 #define _APPLICATION_H_
 
@@ -7,7 +20,11 @@
 
 // OpenGL Includes.
 #include <GL/glew.h>
+#ifdef _OSX_
 #include <GLUT/glut.h>
+#else // _WINDOWS_, _LINUX_
+#include <GL/glut.h>
+#endif // OSX
 #include <GLFW/glfw3.h>
 
 // Project Includes.

@@ -1,3 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
+
 #include "Cube.h"
 #include "Application.h"
 #include "CameraController.h"
@@ -8,7 +22,7 @@ int main(int argc, char** argv)
     spdlog::set_level(spdlog::level::trace);
 
     // Create the main application window.
-	Application application("opengl");
+    Application application("opengl");
 
     // Create a camera controller.
     CameraController cameraController;

@@ -1,4 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 /// This file contains the GLSL shader class. It is responsible for loading,
 /// compiling, and attaching shaders. Each instance of this class contains one
 /// vertex shader and one fragment shader.
@@ -6,242 +19,216 @@
 #ifndef _SHADER_PROGRAM_H_
 #define _SHADER_PROGRAM_H_
 
+// STL Includes.
 #include <string>
 
+// OpenGL Includes/
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-/// The Shader Program Class contains methods for reading, compiling, and
-/// linking a GLSL Shader Program.
 class ShaderProgram
 {
-public:
-    /// At construction time, the files representing the vertex and fragment
-    /// shaders are read in and compiled and a Program is made and linked. If
-    /// any error occurs here, an ApplicationException is thrown.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    ShaderProgram(std::string vertex, std::string fragment);
+    public:
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    ShaderProgram
+        // Description:
+        //    At construction time, the files representing the vertex and fragment
+        //    shaders are read in and compiled and a Program is made and linked.
+        //    if any error occurs here, an ApplicationException is thrown.
+        // Parameters:
+        //
+        // Returns:
+        //
+        ////////////////////////////////////////////////////////////////////////
+        ShaderProgram(std::string argVertex, std::string argFragment);
 
-    /// This creates an empty Shader Program. It is unable to be used until a
-    /// vertex and fragment shader are added to it and a program is made via
-    /// the linkProgram method.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    ShaderProgram(void);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    ShaderProgram
+        // Description:
+        // This creates an empty Shader Program. It is unable to be used until a
+        // vertex and fragment shader are added to it and a program is made via
+        // the linkProgram method.
+        // Parameters:
+        //    None.
+        // Returns:
+        //    None.
+        ////////////////////////////////////////////////////////////////////////
+        ShaderProgram(void);
 
-    /// This will free the OpenGL resources.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    ~ShaderProgram(void);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    ~ShaderProgram
+        // Description:
+        //     This will free the OpenGL resources.
+        // Parameters:
+        //    None.
+        // Returns:
+        //    None.
+        ////////////////////////////////////////////////////////////////////////
+        ~ShaderProgram(void);
 
-    /// A Program is ready to be used if it has been compiled and linked, which
-    /// is the status of the mCompiledAndLinked member variable.
-    ///
-    /// @returns True if the program has been compiled and linked or false if it
-    /// has not been either compiled or linked.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    bool isReadyToUse(void);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    isReadyToUse
+        // Description:
+        //  A Program is ready to be used if it has been compiled and linked, 
+        //  which is the status of the mCompiledAndLinked member variable.
+        // Parameters:
+        //    None.
+        // Returns:
+        //    True if the program has been compiled and linked or false if it
+        //  has not been either compiled or linked.
+        ////////////////////////////////////////////////////////////////////////
+        bool isReadyToUse(void);
 
-    /// This function will read the source of the file 'vertex' and compile it.
-    /// Only one vertex shader can be associated with the shader program. If a
-    /// previous vertex shader has been created, then it will be overwritten by
-    /// the new one.
-    ///
-    /// @attention Creating a new shader requires the program to be relinked.
-    /// @returns True if creation and compilation was successful or false if an
-    /// error occured.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    bool useVertexShader(std::string vertex);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    useVertexShader
+        // Description:
+        //    This function will read the source of the file 'vertex' and compile 
+        //  it. Only one vertex shader can be associated with the shader 
+        //    program. If a previous vertex shader has been created, then it will 
+        //  be overwritten by the new one. Creating a new shader requires the 
+        //  program to be relinked.
+        // Parameters:
+        //    argVertex: Vertex shader path.
+        // Returns:
+        //    True if creation and compilation was successful or false if an
+        //    error occured
+        ////////////////////////////////////////////////////////////////////////
+        bool useVertexShader(std::string argVertex);
 
-    /// This function will read the source of the file 'fragment' and compile
-    /// it. Only one fragment shader can be associated with the shader program.
-    /// If a previous fragment shader has been created, then it will be
-    /// overwritten by the new one.
-    ///
-    /// @attention Creating a new shader requires the program to be relinked.
-    /// @returns True if creation and compilation was successful or false if an
-    /// error occured.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    bool useFragmentShader(std::string fragment);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    useFragmentShader
+        // Description:
+        //    This function will read the source of the file 'fragment' and 
+        //  compile it. Only one fragment shader can be associated with the 
+        //  shader program. If a previous fragment shader has been created, then 
+        //  it will be overwritten by the new one. Creating a new shader 
+        //  requires the program to be relinked.
+        // Parameters:
+        //    argFragment: Fragment shader path.
+        // Returns:
+        //    True if creation and compilation was successful or false if an
+        // error occured
+        ////////////////////////////////////////////////////////////////////////
+        bool useFragmentShader(std::string argFragment);
 
-    /// This function will attach the fragment and vertex shader and link it
-    /// into a compiled program ready for use.
-    ///
-    /// @returns True if linking was successful or false if an error occured.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    bool linkProgram(void);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    linkProgram
+        // Description:
+        //    This function will attach the fragment and vertex shader and link it
+        //    into a compiled program ready for use.
+        // Parameters:
+        //    None.
+        // Returns:
+        //    True if linking was successful or false if an error occured.
+        ////////////////////////////////////////////////////////////////////////
+        bool linkProgram(void);
 
-    /// This function will make the ShaderProgram the active program.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    void use(void);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    use
+        // Description:
+        //    This function will make the ShaderProgram the active program.
+        // Parameters:
+        //    None.
+        // Returns:
+        //    None.
+        ////////////////////////////////////////////////////////////////////////
+        void use(void);
 
-    /// This function is a getter for mProgram.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    GLint getProgram(void);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    program
+        // Description:
+        //    Getter for _program.
+        // Parameters:
+        //    None.
+        // Returns:
+        //    GLinit shader program.
+        ////////////////////////////////////////////////////////////////////////
+        GLint program(void);
 
-    /// The function retrieves a uniform location in the program.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    GLuint getUniformLocation(std::string uniform);
+        /// The function retrieves a uniform location in the program.
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    uniformLocation
+        // Description:
+        //    The function retrieves a uniform location in the program.
+        // Parameters:
+        //    argUniform: Which uniform to get.
+        // Returns:
+        //    GLuint uniform id.
+        ////////////////////////////////////////////////////////////////////////
+        GLuint uniformLocation(std::string argUniform);
 
-    /// Copies the contents of one shader program to another.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    ShaderProgram& operator=(const ShaderProgram& other);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    operator=
+        // Description:
+        //    Copies the contents of one shader program to another.
+        // Parameters:
+        //    argOther: ShaderProgram to copy.
+        // Returns:
+        //    ShaderProgram.
+        ////////////////////////////////////////////////////////////////////////
+        ShaderProgram& operator=(const ShaderProgram& argOther);
 
-private:
-    /// @brief A flag indicating a complete program was created.
-    bool mCompiledAndLinked;
+    private:
+        // A flag indicating a complete program was created.
+        bool _compiledAndLinked;
 
-    /// @brief The file used to compile the Vertex Shader.
-    std::string mVertexFile;
+        // The file used to compile the Vertex Shader.
+        std::string _vertexFile;
 
-    /// @brief The Vertex Shader source.
-    std::string mVertexSource;
+        // The Vertex Shader source.
+        std::string _vertexSource;
 
-    /// @brief The OpenGL Compiled Vertex Shader.
-    GLint mVertexShader;
+        // The OpenGL Compiled Vertex Shader.
+        GLint _vertexShader;
 
-    /// @brief The file used to compile the Fragment Shader.
-    std::string mFragmentFile;
+        // The file used to compile the Fragment Shader.
+        std::string _fragmentFile;
 
-    /// @brief The Fragment Shader source.
-    std::string mFragmentSource;
+        // The Fragment Shader source.
+        std::string _fragmentSource;
 
-    /// @brief The OpenGL Compiled Fragment Shader.
-    GLint mFragmentShader;
+        // The OpenGL Compiled Fragment Shader.
+        GLint _fragmentShader;
 
-    /// @brief The OpenGL Linked Shader Program.
-    GLint mProgram;
+        // The OpenGL Linked Shader Program.
+        GLint _program;
 
-    /// @brief A helper function to read the contents of a file.
-    ///
-    /// This function reads the contents of the file passed in as an argument
-    /// and returns the contents of that file as a string.
-    ///
-    /// @returns The contents of filename.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    std::string readFile(std::string filename);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    readFile
+        // Description:
+        //    This function reads the contents of the file passed in as an 
+        //    argument and returns the contents of that file as a string.
+        // Parameters:
+        //    argFilename: File to read.
+        // Returns:
+        //    The contents of the file.
+        ////////////////////////////////////////////////////////////////////////
+        std::string readFile(std::string argFilename);
 
-    /// @brief Prints the OpenGL Log when an error is detected.
-    ///
-    /// This function will print the contents of the OpenGL Info Log when
-    /// something bad has happened.
-    ////////////////////////////////////////////////////////////////////////
-    // Function:
-    //
-    // Description:
-    //
-    // Parameters:
-    //
-    // Returns:
-    //
-    ////////////////////////////////////////////////////////////////////////
-    void printInfoLog(GLint object);
+        ////////////////////////////////////////////////////////////////////////
+        // Function:
+        //    printInfoLog
+        // Description:
+        //     This function will print the contents of the OpenGL Info Log when
+        //     something bad has happened.
+        // Parameters:
+        //    argObject: OpenGL shader program.
+        // Returns:
+        //    None.
+        ////////////////////////////////////////////////////////////////////////
+        void printInfoLog(GLint argObject);
 };
 
-#endif
+#endif // _SHADER_PROGRAM_H_

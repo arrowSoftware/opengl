@@ -1,4 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 /// This file contains several command classes that the Camera responds to. Most
 /// of these commands are generated and responded to by the InputManager.
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +44,7 @@ class LookCommand : public Command
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Execute.
+        //  execute.
         // Description:
         //  Executes the command.
         // Parameters:
@@ -39,7 +52,7 @@ class LookCommand : public Command
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        virtual void Execute(void);
+        virtual void execute(void);
 
     private:
         // The camera object.
@@ -70,7 +83,7 @@ class MoveCommand : public Command
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Execute.
+        //  execute.
         // Description:
         //  Executes the command.
         // Parameters:
@@ -78,7 +91,7 @@ class MoveCommand : public Command
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        virtual void Execute(void);
+        virtual void execute(void);
 
     private:
         // The camera object.

@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
@@ -6,7 +19,8 @@
 #include "spdlog/sinks/basic_file_sink.h"
 #include <glm/gtx/string_cast.hpp>
 
-//#define DEBUG_PRINTF(message) printf("[%s][%s][%d] %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, message);
-#define DEBUG_PRINTF(message)
+#ifdef _WINDOWS_
+#define __PRETTY_FUNCTION__ __FUNCTION__
+#endif // _WINDOWS_
 
 #endif // _UTILS_H_

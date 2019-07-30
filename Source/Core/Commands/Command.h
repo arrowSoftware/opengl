@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
 #ifndef _COMMAND_H_
 #define _COMMAND_H_
 
@@ -18,7 +31,7 @@ class Command
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
-        //  Execute.
+        //  execute.
         // Description:
         //  Pure virtual function executes the command.
         // Parameters:
@@ -26,7 +39,7 @@ class Command
         // Returns:
         //  None.
         ////////////////////////////////////////////////////////////////////////
-        virtual void Execute(void) = 0;
+        virtual void execute(void) = 0;
 };
 
 #endif // _COMMAND_H_

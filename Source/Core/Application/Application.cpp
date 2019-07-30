@@ -1,3 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
+
 // Project Includes.
 #include "Application.h"
 #include "ApplicationException.hpp"
@@ -32,28 +46,28 @@ Application::Application(std::string argName) :
     glfwSetErrorCallback(errorCallback);
 
     glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-	_window = glfwCreateWindow(1024, 768, argName.c_str(), NULL, NULL);
-	if (NULL == _window)
+    _window = glfwCreateWindow(1024, 768, argName.c_str(), NULL, NULL);
+    if (NULL == _window)
     {
         throw ApplicationException("Failed to open GLFW window. If you have an"
                                    "Intel GPU, they are not 3.3 compatible.  "
                                    "Try 2.1");
-	}
+    }
 
     // Make the window's context current
     glfwMakeContextCurrent(_window);
 
     // Initialize GLEW
-	if (GLEW_OK != glewInit())
+    if (GLEW_OK != glewInit())
     {
         throw ApplicationException("Failed to initialize GLEW");
-	}
+    }
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
@@ -120,7 +134,7 @@ void Application::run(void)
 
 void Application::attach(Object *argObject)
 {
-    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->GetObjectName());
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->objectName());
 
     // Add object to the draw list.
     this->_objects.push_back(argObject);
@@ -130,7 +144,7 @@ void Application::attach(Object *argObject)
 
 void Application::dettach(Object *argObject)
 {
-    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->getObjectName());
+    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argObject->objectName());
 
     std::vector<Object *>::iterator it = std::find(
         this->_objects.begin(),
@@ -142,7 +156,7 @@ void Application::dettach(Object *argObject)
         this->_objects.erase(it);
         spdlog::debug("{} Erased: {}",
                       __PRETTY_FUNCTION__,
-                      argObject->getObjectName());
+                      argObject->objectName());
     }
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);

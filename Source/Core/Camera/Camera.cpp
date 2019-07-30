@@ -1,3 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//    Camera.cpp
+// Description:
+//
+// Methods:
+//    See Header.
+// Fields:
+//    See Header.
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
+
 // STL Includes.
 #include <iostream>
 
@@ -16,6 +30,7 @@ Camera::Camera(void) :
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
+    // Update the cameras facing orientation.
     updateFacing();
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
@@ -25,10 +40,9 @@ void Camera::setPosition(glm::vec3 argPosition)
 {
     spdlog::trace("{} IN ({},{},{})",
                   __PRETTY_FUNCTION__,
-                  argPosition.x,
-                  argPosition.y,
-                  argPosition.z);
+                  glm::to_string(argPosition));
 
+    // Set the camera position.
     this->_position = argPosition;
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
@@ -55,10 +69,14 @@ glm::vec3 Camera::facing(void)
 void Camera::setYaw(float argYaw)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argYaw);
-    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 
+    // Set the yaw.
     this->_yaw = argYaw;
+
+    // Then update the facing orientation.
     this->updateFacing();
+
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 float Camera::yaw(void)
@@ -72,10 +90,14 @@ float Camera::yaw(void)
 void Camera::setPitch(float argPitch)
 {
     spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, argPitch);
-    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 
+    // Set the pitch,
     this->_pitch = argPitch;
+
+    // Then update the facing orientation.
     this->updateFacing();
+
+    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 float Camera::pitch(void)
@@ -90,6 +112,7 @@ glm::mat4 Camera::view(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
+    // Get the view.
     glm::mat4 ret = glm::lookAt(
         this->_position,
         this->_position + this->_facing,

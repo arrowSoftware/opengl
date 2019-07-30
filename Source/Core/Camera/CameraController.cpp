@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:
+//
+// Description:
+//
+// Methods:
+//
+// Fields:
+//
+// Modification History:
+//    Date:        Who:            What:
+//  07/25/2019  Tyler Gajewski    Initial Creation
+////////////////////////////////////////////////////////////////////////////////
 
 // STL Includes.
 #include <iostream>
@@ -27,99 +40,119 @@ CameraController::CameraController(void)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void CameraController::registerWith(InputManager &manager)
+void CameraController::registerWith(InputManager &argManager)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
 
     // Register to be notified for the following events.
-    manager.RegisterInput(AE_MOVE_FORWARD, this);
-    manager.RegisterInput(AE_MOVE_BACKWARD, this);
-    manager.RegisterInput(AE_MOVE_LEFT, this);
-    manager.RegisterInput(AE_MOVE_RIGHT, this);
-    manager.RegisterInput(AE_MOVE_UP, this);
-    manager.RegisterInput(AE_MOVE_DOWN, this);
-    manager.RegisterInput(AE_LOOK_AROUND, this);
+    argManager.registerInput(ApplicationEventEnum::AE_MOVE_FORWARD, this);
+    argManager.registerInput(ApplicationEventEnum::AE_MOVE_BACKWARD, this);
+    argManager.registerInput(ApplicationEventEnum::AE_MOVE_LEFT, this);
+    argManager.registerInput(ApplicationEventEnum::AE_MOVE_RIGHT, this);
+    argManager.registerInput(ApplicationEventEnum::AE_MOVE_UP, this);
+    argManager.registerInput(ApplicationEventEnum::AE_MOVE_DOWN, this);
+    argManager.registerInput(ApplicationEventEnum::AE_LOOK_AROUND, this);
+
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void CameraController::OnEvent(ApplicationEventStruct event)
+void CameraController::onEvent(ApplicationEventStruct argEvent)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
-    if (event.type != AE_REPEAT)
+
+    // If this is not a repeating event than store the type in this objects
+    // Event list.
+    if (argEvent.type != ApplicationEventType::AE_REPEAT)
     {
-        mEventStates[event.code] = event.type;
+        this->_eventStates[argEvent.code] = argEvent.type;
     }
 
-    switch(event.code)
+    // Process the event.
+    switch(argEvent.code)
     {
-        case AE_LOOK_AROUND:
-            mCursorData = event.data;
+        // Process mouse/camera look movement.
+        case ApplicationEventEnum::AE_LOOK_AROUND:
+            // Get the mouse data.
+            this->_cursorData = argEvent.data;
             break;
 
         default:
             break;
     }
+
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
 void CameraController::update(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
-    updatePosition();
-    updateFacing();
+
+    // Update camera position.
+    this->updatePosition();
+
+    // Update camera facing orientation.
+    this->updateFacing();
+
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-glm::mat4 CameraController::getView(void)
+glm::mat4 CameraController::view(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
-    return _camera.GetView();
+
+    return this->_camera.view();
 }
 
-glm::vec3 CameraController::getPosition(void)
+glm::vec3 CameraController::position(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
-    spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
-    return _camera.GetPosition();
+
+    // Get the camera position for return/log.
+    glm::vec3 ret = this->_camera.position();
+
+    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, glm::to_string(ret));
+
+    return ret;
 }
 
 void CameraController::updatePosition(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
-    glm::vec3 position = _camera.GetPosition();
-    glm::vec3 direction = _camera.GetFacing();
+
+    glm::vec3 position = this->_camera.position();
+    glm::vec3 direction = this->_camera.facing();
     glm::vec3 deltaPos = glm::vec3(0);
 
     Command *cmd;
 
     // Calculate the new position of the Camera based upon which events have
     // been received.
-    if (mEventStates[AE_MOVE_BACKWARD] == AE_BEGIN)
+    if (this->_eventStates[AE_MOVE_BACKWARD] == AE_BEGIN)
     {
         deltaPos -= direction;
     }
-    if (mEventStates[AE_MOVE_FORWARD] == AE_BEGIN)
+    if (this->_eventStates[AE_MOVE_FORWARD] == AE_BEGIN)
     {
         deltaPos += direction;
     }
-    if (mEventStates[AE_MOVE_LEFT] == AE_BEGIN)
+    if (this->_eventStates[AE_MOVE_LEFT] == AE_BEGIN)
     {
         deltaPos -= glm::normalize(glm::cross(
                 direction,
                 VECTOR_UP));
     }
-    if (mEventStates[AE_MOVE_RIGHT] == AE_BEGIN)
+    if (this->_eventStates[AE_MOVE_RIGHT] == AE_BEGIN)
     {
         deltaPos += glm::normalize(glm::cross(
                 direction,
                 VECTOR_UP));
     }
-    if (mEventStates[AE_MOVE_UP] == AE_BEGIN)
+    if (this->_eventStates[AE_MOVE_UP] == AE_BEGIN)
     {
         deltaPos += VECTOR_UP;
     }
-    if (mEventStates[AE_MOVE_DOWN] == AE_BEGIN)
+    if (this->_eventStates[AE_MOVE_DOWN] == AE_BEGIN)
     {
         deltaPos -= VECTOR_UP;
     }
@@ -133,8 +166,8 @@ void CameraController::updatePosition(void)
     }
 
     // Create the command.
-    cmd = new MoveCommand(&_camera, position + deltaPos);
-    cmd->Execute();
+    cmd = new MoveCommand(&this->_camera, position + deltaPos);
+    cmd->execute();
     delete cmd;
 
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
@@ -143,17 +176,17 @@ void CameraController::updatePosition(void)
 void CameraController::updateFacing(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
-    float yaw = _camera.GetYaw();
-    float pitch = _camera.GetPitch();
+    float yaw = _camera.yaw();
+    float pitch = _camera.pitch();
 
     Command *cmd;
 
     // Obtain the deltas in cursor position.
-    float dx = mCursorData.axis.x - mPrevCursorData.axis.x;
-    float dy = mPrevCursorData.axis.y - mCursorData.axis.y;
+    float dx = _cursorData.axis.x - _prevCursorData.axis.x;
+    float dy = _prevCursorData.axis.y - _cursorData.axis.y;
 
     // Update the Previous Cursor Position Data.
-    mPrevCursorData = mCursorData;
+    _prevCursorData = _cursorData;
 
     // Avoid spikes in the direction.
     if (dx > 100 || dy > 100)
@@ -170,7 +203,7 @@ void CameraController::updateFacing(void)
 
         // Create the command.
         cmd = new LookCommand(&_camera, yaw, pitch);
-        cmd->Execute();
+        cmd->execute();
         delete cmd;
     }
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
