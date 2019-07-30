@@ -14,6 +14,9 @@ do
     elif [ "$arg" == "debug" ]
     then
         build=debug
+    elif [ "$arg" == "lint" ]
+    then
+        cpplint --filter=-legal/copyright,-whitespace/braces,-whitespace/comments,-whitespace/indent "$@"
     fi
 done
 

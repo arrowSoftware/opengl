@@ -11,12 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_
-
-// STL Includes.
-#include <string>
-#include <vector>
+#ifndef SOURCE_CORE_APPLICATION_APPLICATION_H_
+#define SOURCE_CORE_APPLICATION_APPLICATION_H_
 
 // OpenGL Includes.
 #include <GL/glew.h>
@@ -26,6 +22,10 @@
 #include <GL/glut.h>
 #endif // OSX
 #include <GLFW/glfw3.h>
+
+// STL Includes.
+#include <string>
+#include <vector>
 
 // Project Includes.
 #include "Object.h"
@@ -45,7 +45,7 @@ class Application
         // Returns:
         //  Application object.
         ////////////////////////////////////////////////////////////////////////
-        Application(std::string argName);
+        explicit Application(std::string argName);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
@@ -287,4 +287,4 @@ class Application
                                   double argYpos);
 };
 
-#endif // _APPLICATION_H_
+#endif // SOURCE_CORE_APPLICATION_APPLICATION_H_
