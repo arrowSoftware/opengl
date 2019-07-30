@@ -17,6 +17,7 @@ do
     elif [ "$arg" == "lint" ]
     then
         cpplint --filter=-legal/copyright,-whitespace/braces,-whitespace/comments,-whitespace/indent "$@"
+        exit
     fi
 done
 
