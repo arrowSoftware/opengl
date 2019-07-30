@@ -78,7 +78,8 @@ void Object::useShader(ShaderProgram &shader)
     // Ensure that the shader is ready to be used.
     if (shader.isReadyToUse() != true)
     {
-        std::cerr << "Region::useShader Shader is not ready to use" << std::endl;
+        std::cerr << "Region::useShader Shader is not ready to use"
+                  << std::endl;
         return;
     }
 

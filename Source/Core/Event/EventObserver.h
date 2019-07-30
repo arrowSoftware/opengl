@@ -2,7 +2,9 @@
 // File:
 //
 // Description:
-//
+//    This file contains a base class representation of the interface used to
+//    observe events that are passed throughout the application. The input
+//    manager is one source of generating events.
 // Methods:
 //
 // Fields:
@@ -11,13 +13,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-/// This file contains a base class representation of the interface used to
-/// observe events that are passed throughout the application. The input manager
-/// is one source of generating events.
-////////////////////////////////////////////////////////////////////////////////
-#ifndef _EVENT_OBSERVER_H_
-#define _EVENT_OBSERVER_H_
+#ifndef SOURCE_CORE_EVENT_EVENTOBSERVER_H_
+#define SOURCE_CORE_EVENT_EVENTOBSERVER_H_
 
 // Project Includes.
 #include "Event.h"
@@ -50,4 +47,4 @@ class EventObserver
         virtual void onEvent(ApplicationEventStruct argEvent) = 0;
 };
 
-#endif // _EVENT_OBSERVER_H_
+#endif // SOURCE_CORE_EVENT_EVENTOBSERVER_H_

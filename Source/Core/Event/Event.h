@@ -2,22 +2,23 @@
 // File:
 //    Event.h
 // Description:
-//    This file contains data that relates to events emitted by the input manager.
+//    This file contains data that relates to events emitted by the input
+//    manager.
 // Methods:
 //    None.
 // Fields:
 //    ApplicationEventEnum aka app_event_enum_t
 //    ApplicationEventType aka app_event_type_t
-//      ApplicationEventAxisStruct aka app_event_axis_t
-//      ApplicationEventDataStruct aka app_event_data_t
+//    ApplicationEventAxisStruct aka app_event_axis_t
+//    ApplicationEventDataStruct aka app_event_data_t
 //    ApplicationEventStruct aka app_event_struct_t
 // Modification History:
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef _EVENT_H_
-#define _EVENT_H_
+#ifndef SOURCE_CORE_EVENT_EVENT_H_
+#define SOURCE_CORE_EVENT_EVENT_H_
 
 // STL Includes.
 #include <cstdio>
@@ -79,4 +80,4 @@ typedef struct ApplicationEventStruct
     }
 } app_event_struct_t;
 
-#endif // _EVENT_H_
+#endif // SOURCE_CORE_EVENT_EVENT_H_

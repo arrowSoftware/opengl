@@ -16,8 +16,8 @@
 /// compiling, and attaching shaders. Each instance of this class contains one
 /// vertex shader and one fragment shader.
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _SHADER_PROGRAM_H_
-#define _SHADER_PROGRAM_H_
+#ifndef SOURCE_CORE_SHADERS_SHADERPROGRAM_H_
+#define SOURCE_CORE_SHADERS_SHADERPROGRAM_H_
 
 // STL Includes.
 #include <string>
@@ -33,9 +33,10 @@ class ShaderProgram
         // Function:
         //    ShaderProgram
         // Description:
-        //    At construction time, the files representing the vertex and fragment
-        //    shaders are read in and compiled and a Program is made and linked.
-        //    if any error occurs here, an ApplicationException is thrown.
+        //    At construction time, the files representing the vertex and
+        //    fragment shaders are read in and compiled and a Program is made
+        //    and linked. if any error occurs here, an ApplicationException is
+        //    thrown.
         // Parameters:
         //
         // Returns:
@@ -87,11 +88,11 @@ class ShaderProgram
         // Function:
         //    useVertexShader
         // Description:
-        //    This function will read the source of the file 'vertex' and compile
-        //  it. Only one vertex shader can be associated with the shader
-        //    program. If a previous vertex shader has been created, then it will
-        //  be overwritten by the new one. Creating a new shader requires the
-        //  program to be relinked.
+        //    This function will read the source of the file 'vertex' and
+        //    compile it. Only one vertex shader can be associated with the
+        //    shader program. If a previous vertex shader has been created,
+        //    then it will be overwritten by the new one. Creating a new shader
+        //    requires the program to be relinked.
         // Parameters:
         //    argVertex: Vertex shader path.
         // Returns:
@@ -121,8 +122,8 @@ class ShaderProgram
         // Function:
         //    linkProgram
         // Description:
-        //    This function will attach the fragment and vertex shader and link it
-        //    into a compiled program ready for use.
+        //    This function will attach the fragment and vertex shader and link
+        //    it into a compiled program ready for use.
         // Parameters:
         //    None.
         // Returns:
@@ -231,4 +232,4 @@ class ShaderProgram
         void printInfoLog(GLuint argObject);
 };
 
-#endif // _SHADER_PROGRAM_H_
+#endif // SOURCE_CORE_SHADERS_SHADERPROGRAM_H_

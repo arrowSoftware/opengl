@@ -142,7 +142,8 @@ void Camera::updateFacing(void)
 
 void Camera::printData(void)
 {
-    std::cout << "Pos: (" << this->_position.x << ", " << this->_position.y << ", " <<
-        this->_position.z << ") Dir: (" << this->_facing.x << ", " << this->_facing.y << ", " <<
-        this->_facing.z << ") Yaw: " << this->_yaw << " Pitch: " << this->_pitch << std::endl;
+    std::cout << "Pos: " << glm::to_string(this->_position)
+              << "Dir: " << glm::to_string(this->_facing)
+              << "Yaw: " << this->_yaw
+              << "Pitch: " << this->_pitch << std::endl;
 }

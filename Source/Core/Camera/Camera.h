@@ -11,8 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _CAMERA_H_
-#define _CAMERA_H_
+#ifndef SOURCE_CORE_CAMERA_CAMERA_H_
+#define SOURCE_CORE_CAMERA_CAMERA_H_
 
 // OpenGL Includes.
 #include <glm/glm.hpp>
@@ -172,4 +172,4 @@ class Camera
         void printData(void);
 };
 
-#endif
+#endif // SOURCE_CORE_CAMERA_CAMERA_H_

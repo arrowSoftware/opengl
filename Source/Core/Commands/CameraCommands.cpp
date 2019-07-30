@@ -19,7 +19,7 @@ LookCommand::LookCommand(Camera *argCamera, float argYaw, float argPitch)
 {
     spdlog::trace("{} IN ({},{},{})",
                   __PRETTY_FUNCTION__,
-                  (void*)argCamera,
+                  reinterpret_cast<void*>(argCamera),
                   argYaw,
                   argPitch);
 
@@ -44,7 +44,7 @@ MoveCommand::MoveCommand(Camera *argCamera, glm::vec3 argPosition)
 {
     spdlog::trace("{} IN ({},{})",
                   __PRETTY_FUNCTION__,
-                  (void*)argCamera,
+                  reinterpret_cast<void*>(argCamera),
                   glm::to_string(argPosition));
 
     _camera = argCamera;

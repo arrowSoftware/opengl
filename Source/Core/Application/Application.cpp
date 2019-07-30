@@ -12,14 +12,15 @@
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
 
+// STL Includes.
+#include <iostream>
+#include <algorithm>
+
 // Project Includes.
 #include "Application.h"
 #include "ApplicationException.hpp"
 #include "Utils.h"
 
-// STL Includes.
-#include <iostream>
-#include <algorithm>
 
 // Declare the static members of Application.
 InputManager Application::_inputManager;
@@ -48,7 +49,7 @@ Application::Application(std::string argName) :
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
@@ -164,7 +165,9 @@ void Application::dettach(Object *argObject)
 
 void Application::registerInputs(InputManager &argManager)
 {
-    spdlog::trace("{} IN ({})", __PRETTY_FUNCTION__, (void*)&argManager);
+    spdlog::trace("{} IN ({})",
+                  __PRETTY_FUNCTION__,
+                  reinterpret_cast<void*>(&argManager));
 
     _inputManager = argManager;
 
@@ -175,11 +178,12 @@ void Application::registerInputs(InputManager &argManager)
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 
-void Application::registerCameraController(CameraController &argCameraController)
+void Application::registerCameraController(
+    CameraController &argCameraController)
 {
     spdlog::trace("{} IN ({})",
                   __PRETTY_FUNCTION__,
-                  (void*)&argCameraController);
+                  reinterpret_cast<void*>(&argCameraController));
 
     _cameraController = argCameraController;
 
@@ -191,8 +195,8 @@ void Application::registerInputToCamera(InputManager &argManager,
 {
     spdlog::trace("{} IN ({},{})",
                   __PRETTY_FUNCTION__,
-                  (void*)&argManager,
-                  (void*)&argCameraController);
+                  reinterpret_cast<void*>(&argManager),
+                  reinterpret_cast<void*>(&argCameraController));
 
     argCameraController.registerWith(argManager);
 
@@ -220,7 +224,9 @@ void Application::printVersionInfo(void)
 GLFWwindow *Application::window(void)
 {
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
-    spdlog::trace("{} OUT ({})", __PRETTY_FUNCTION__, (void*)this->_window);
+    spdlog::trace("{} OUT ({})",
+                  __PRETTY_FUNCTION__,
+                  reinterpret_cast<void*>(this->_window));
     return this->_window;
 }
 
@@ -229,7 +235,7 @@ CameraController Application::cameraController(void)
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})",
                   __PRETTY_FUNCTION__,
-                  (void*)&_cameraController);
+                  reinterpret_cast<void*>(&_cameraController));
     return _cameraController;
 }
 
@@ -245,7 +251,7 @@ InputManager Application::inputManager(void)
     spdlog::trace("{} IN ()", __PRETTY_FUNCTION__);
     spdlog::trace("{} OUT ({})",
                   __PRETTY_FUNCTION__,
-                  (void*)&_inputManager);
+                  reinterpret_cast<void*>(&_inputManager));
     return _inputManager;
 }
 
@@ -313,10 +319,10 @@ void Application::keyCallback(GLFWwindow *argWindow,
 
     // Call the inputs managers keyboard callback.
     _inputManager.keyCallback(argWindow,
-                                           argKey,
-                                           argScancode,
-                                           argAction,
-                                           argModifiers);
+                              argKey,
+                              argScancode,
+                              argAction,
+                              argModifiers);
     spdlog::trace("{} OUT ()", __PRETTY_FUNCTION__);
 }
 

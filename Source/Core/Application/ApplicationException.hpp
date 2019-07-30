@@ -11,8 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _APPLICATION_EXCEPTION_HPP_
-#define _APPLICATION_EXCEPTION_HPP_
+#ifndef SOURCE_CORE_APPLICATION_APPLICATIONEXCEPTION_HPP_
+#define SOURCE_CORE_APPLICATION_APPLICATIONEXCEPTION_HPP_
 
 // STL Includes.
 #include <exception>
@@ -35,9 +35,9 @@ class ApplicationException : public std::runtime_error
         // Returns:
         //
         ////////////////////////////////////////////////////////////////////////
-        ApplicationException(std::string const &argError) :
+        explicit ApplicationException(std::string const &argError) :
             std::runtime_error(argError)
         {};
 };
 
-#endif // _APPLICATION_EXCEPTION_HPP_
+#endif // SOURCE_CORE_APPLICATION_APPLICATIONEXCEPTION_HPP_

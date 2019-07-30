@@ -11,8 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _OBJECT_H_
-#define _OBJECT_H_
+#ifndef SOURCE_CORE_OBJECT_OBJECT_H_
+#define SOURCE_CORE_OBJECT_OBJECT_H_
 
 // STL Includes.
 #include <string>
@@ -55,7 +55,7 @@ class Object
         // Returns:
         //    Object.
         ////////////////////////////////////////////////////////////////////////
-        Object(std::string argObjectName);
+        explicit Object(std::string argObjectName);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
@@ -239,4 +239,4 @@ class Object
         GLuint _uniformModel;
 };
 
-#endif // _OBJECT_H_
+#endif // SOURCE_CORE_OBJECT_OBJECT_H_

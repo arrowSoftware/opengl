@@ -11,8 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _COMMAND_H_
-#define _COMMAND_H_
+#ifndef SOURCE_CORE_COMMANDS_COMMAND_H_
+#define SOURCE_CORE_COMMANDS_COMMAND_H_
 
 class Command
 {
@@ -42,4 +42,4 @@ class Command
         virtual void execute(void) = 0;
 };
 
-#endif // _COMMAND_H_
+#endif // SOURCE_CORE_COMMANDS_COMMAND_H_

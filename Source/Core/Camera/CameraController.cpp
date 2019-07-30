@@ -68,7 +68,7 @@ void CameraController::onEvent(ApplicationEventStruct argEvent)
     }
 
     // Process the event.
-    switch(argEvent.code)
+    switch (argEvent.code)
     {
         // Process mouse/camera look movement.
         case ApplicationEventEnum::AE_LOOK_AROUND:
@@ -198,8 +198,8 @@ void CameraController::updateFacing(void)
     if (dx != 0 || dy != 0)
     {
         // Calculate the new direction.
-        yaw += dx * (float)LOOK_SPEED;
-        pitch += dy * (float)LOOK_SPEED;
+        yaw += dx * static_cast<float>(LOOK_SPEED);
+        pitch += dy * static_cast<float>(LOOK_SPEED);
 
         // Create the command.
         cmd = new LookCommand(&_camera, yaw, pitch);

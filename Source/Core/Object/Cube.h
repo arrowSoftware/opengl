@@ -11,10 +11,12 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _CUBE_H_
-#define _CUBE_H_
+#ifndef SOURCE_CORE_OBJECT_CUBE_H_
+#define SOURCE_CORE_OBJECT_CUBE_H_
 
 #include "Object.h"
+
+#include <string>
 
 class Cube : public Object
 {
@@ -31,7 +33,7 @@ class Cube : public Object
         // Returns:
         //    Cube Object.
         ////////////////////////////////////////////////////////////////////////
-        Cube(std::string argObjectName);
+        explicit Cube(std::string argObjectName);
 
         ////////////////////////////////////////////////////////////////////////
         // Function:
@@ -92,42 +94,42 @@ class Cube : public Object
         glm::mat4 MVP;
 
         static constexpr GLfloat g_vertex_buffer_data[] = {
-            -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-            -1.0f,-1.0f, 1.0f,
+            -1.0f, -1.0f, -1.0f, // triangle 1 : begin
+            -1.0f, -1.0f, 1.0f,
             -1.0f, 1.0f, 1.0f, // triangle 1 : end
-            1.0f, 1.0f,-1.0f, // triangle 2 : begin
-            -1.0f,-1.0f,-1.0f,
-            -1.0f, 1.0f,-1.0f, // triangle 2 : end
-            1.0f,-1.0f, 1.0f,
-            -1.0f,-1.0f,-1.0f,
-            1.0f,-1.0f,-1.0f,
-            1.0f, 1.0f,-1.0f,
-            1.0f,-1.0f,-1.0f,
-            -1.0f,-1.0f,-1.0f,
-            -1.0f,-1.0f,-1.0f,
+            1.0f, 1.0f, -1.0f, // triangle 2 : begin
+            -1.0f, -1.0f, -1.0f,
+            -1.0f, 1.0f, -1.0f, // triangle 2 : end
+            1.0f, -1.0f, 1.0f,
+            -1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, 1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f, -1.0f,
             -1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f,-1.0f,
-            1.0f,-1.0f, 1.0f,
-            -1.0f,-1.0f, 1.0f,
-            -1.0f,-1.0f,-1.0f,
+            -1.0f, 1.0f, -1.0f,
+            1.0f, -1.0f, 1.0f,
+            -1.0f, -1.0f, 1.0f,
+            -1.0f, -1.0f, -1.0f,
             -1.0f, 1.0f, 1.0f,
-            -1.0f,-1.0f, 1.0f,
-            1.0f,-1.0f, 1.0f,
+            -1.0f, -1.0f, 1.0f,
+            1.0f, -1.0f, 1.0f,
             1.0f, 1.0f, 1.0f,
-            1.0f,-1.0f,-1.0f,
-            1.0f, 1.0f,-1.0f,
-            1.0f,-1.0f,-1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, 1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
             1.0f, 1.0f, 1.0f,
-            1.0f,-1.0f, 1.0f,
+            1.0f, -1.0f, 1.0f,
             1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f,-1.0f,
-            -1.0f, 1.0f,-1.0f,
+            1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, -1.0f,
             1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f,-1.0f,
+            -1.0f, 1.0f, -1.0f,
             -1.0f, 1.0f, 1.0f,
             1.0f, 1.0f, 1.0f,
             -1.0f, 1.0f, 1.0f,
-            1.0f,-1.0f, 1.0f
+            1.0f, -1.0f, 1.0f
         };
 
         static constexpr GLfloat g_color_buffer_data[] = {
@@ -170,4 +172,4 @@ class Cube : public Object
         };
 };
 
-#endif // _CUBE_H_
+#endif // SOURCE_CORE_OBJECT_CUBE_H_

@@ -12,10 +12,10 @@
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include <iostream>
 
 #include "InputManager.h"
 #include "Utils.h"
@@ -49,7 +49,7 @@ void InputManager::keyCallback(GLFWwindow *window, int key, int scancode,
     ApplicationEventStruct event;
 
     // The code is stored in the keymap.
-    event.code = _keyEventMap[(unsigned long)key];
+    event.code = _keyEventMap[static_cast<ApplicationEventEnum>(key)];
 
     // The type depends upon the action.
     switch (action)
@@ -75,8 +75,8 @@ void InputManager::mouseCallback(GLFWwindow *window, double xpos, double ypos)
     event.code = AE_LOOK_AROUND;
     event.type = AE_SINGLE;
 
-    event.data.axis.x = (float)xpos;
-    event.data.axis.y = (float)ypos;
+    event.data.axis.x = static_cast<float>(xpos);
+    event.data.axis.y = static_cast<float>(ypos);
 
     emitEvent(event);
 }

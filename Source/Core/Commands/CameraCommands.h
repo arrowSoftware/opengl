@@ -15,8 +15,8 @@
 /// This file contains several command classes that the Camera responds to. Most
 /// of these commands are generated and responded to by the InputManager.
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _COMMANDS_H_
-#define _COMMANDS_H_
+#ifndef SOURCE_CORE_COMMANDS_CAMERACOMMANDS_H_
+#define SOURCE_CORE_COMMANDS_CAMERACOMMANDS_H_
 
 // OpenGL Includes.
 #include <glm/glm.hpp>
@@ -101,4 +101,4 @@ class MoveCommand : public Command
         glm::vec3 _position;
 };
 
-#endif // _COMMANDS_H_
+#endif // SOURCE_CORE_COMMANDS_CAMERACOMMANDS_H_

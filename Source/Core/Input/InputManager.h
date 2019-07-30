@@ -24,16 +24,16 @@
 /// it will notify all registered observers when an event occurs.
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef _INPUT_MANAGER_H_
-#define _INPUT_MANAGER_H_
-
-// STL Includes.
-#include <list>
-#include <vector>
+#ifndef SOURCE_CORE_INPUT_INPUTMANAGER_H_
+#define SOURCE_CORE_INPUT_INPUTMANAGER_H_
 
 // OpenGL Includes.
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+// STL Includes.
+#include <list>
+#include <vector>
 
 // Project Includes.
 #include "EventObserver.h"
@@ -119,18 +119,17 @@ class InputManager
         void emitEvent(ApplicationEventStruct argEvent);
 
     private:
-
-        // Each index in the vector corresponds to a single ApplicationEventEnum.
-        // The vector stores a list of observers that will be notified when the
-        // corresponding event occurs. It is sixed in the contrustor to the
-        // largest value in the ApplicationEventEnum.
+        // Each index in the vector corresponds to a single
+        // ApplicationEventEnum. The vector stores a list of observers that will
+        // be notified when the corresponding event occurs. It is sixed in the
+        // contrustor to the largest value in the ApplicationEventEnum.
         std::vector<std::list<EventObserver *>> _subscribers;
 
-        // This structure maps GLFW keys to Application Event Types. The index into
-        // the vector is the key, and the value at that index is an event that is
-        // mapped to that key. Note that this only allows for one event per key
-        // input.
+        // This structure maps GLFW keys to Application Event Types. The index
+        // into the vector is the key, and the value at that index is an event
+        // that is mapped to that key. Note that this only allows for one event
+        // per key input.
         std::vector<ApplicationEventEnum> _keyEventMap;
 };
 
-#endif // _INPUT_MANAGER_H_
+#endif // SOURCE_CORE_INPUT_INPUTMANAGER_H_

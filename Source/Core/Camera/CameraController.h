@@ -11,8 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _CAMERA_CONTROLLER_H_
-#define _CAMERA_CONTROLLER_H_
+#ifndef SOURCE_CORE_CAMERA_CAMERACONTROLLER_H_
+#define SOURCE_CORE_CAMERA_CAMERACONTROLLER_H_
 
 // STL Includes.
 #include <vector>
@@ -138,4 +138,4 @@ class CameraController : public EventObserver
         void updateFacing(void);
 };
 
-#endif // _CAMERA_CONTROLLER_H_
+#endif // SOURCE_CORE_CAMERA_CAMERACONTROLLER_H_

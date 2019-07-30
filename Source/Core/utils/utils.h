@@ -11,8 +11,8 @@
 //    Date:        Who:            What:
 //  07/25/2019  Tyler Gajewski    Initial Creation
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _UTILS_H_
-#define _UTILS_H_
+#ifndef SOURCE_CORE_UTILS_UTILS_H_
+#define SOURCE_CORE_UTILS_UTILS_H_
 
 #include <cstdio>
 #include "spdlog/spdlog.h"
@@ -23,4 +23,4 @@
 #define __PRETTY_FUNCTION__ __FUNCTION__
 #endif // _WINDOWS_
 
-#endif // _UTILS_H_
+#endif // SOURCE_CORE_UTILS_UTILS_H_
